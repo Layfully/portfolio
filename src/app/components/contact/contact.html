@@ -1,20 +1,24 @@
 <section id="contact">
-  <h1>Contact</h1>
-  <p>Please contact me directly at <a href="mailto:contact@adriangaborek.dev"> contact{{'@'}}adriangaborek.dev</a></p>
+  <h1>{{ blok.title }}</h1>
+  <p [innerHTML]="blok.prompt | richText"></p>
 
-  <form>
-    <label for="email">Your email</label>
-    <input type="email" id="email" name="email" />
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      [placeholder]="blok.email_placeholder"
+      required
+    />
 
-    <label for="message">Your message</label>
     <textarea
       id="message"
-      name="message"
-      placeholder="Your message"
+      formControlName="message"
+      [placeholder]="blok.message_placeholder"
       required
       maxlength="5000"
     ></textarea>
 
-    <button type="submit">Send</button>
+    <button type="submit" [disabled]="!contactForm.valid">{{blok.send_text}}</button>
   </form>
 </section>

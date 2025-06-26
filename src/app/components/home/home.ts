@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
-import { About } from '../about/about';
-import { Hero } from '../hero/hero';
-import { Header } from '../header/header';
-import { Footer } from '../footer/footer';
-import { Experience } from '../experience/experience';
-import { Contact } from '../contact/contact';
-import { Skills } from '../skills/skills';
-import { Projects } from '../projects/projects';
+import { Component, OnInit } from '@angular/core';
+import { BlokComponent } from '../blok-component/blok-component';
+import { StoryblokService } from '../../services/storyblok.service';
 
 @Component({
   selector: 'app-home',
-  imports: [Hero, About, Header, Footer, Experience, Contact, Skills, Projects],
+  imports: [BlokComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
-export class Home {
+export class Home implements OnInit {
+  story: any = { content: null };
 
+  constructor(private storyblokService: StoryblokService) {}
+
+  ngOnInit() {
+    this.storyblokService.getStory('portfolio', { version: 'draft' })
+      .then(data => {
+        this.story = data.data.story;
+      });
+  }
 }

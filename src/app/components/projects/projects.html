@@ -1,27 +1,40 @@
 <section id="projects">
-  <h2>My Projects</h2>
+  <h2>{{ blok.title }}</h2>
 
   <div class="projects-container">
-    <!-- Project 1: This Website -->
-    <article class="project-item">
-      <div class="project-image">
-        <a href="#" aria-label="View a screenshot of This Website project">
-          <img src="/path/to/your/project1-image.png" alt="Screenshot of my personal portfolio website." />
-        </a>
-      </div>
-      <div class="project-info">
-        <h3 class="project-title">
-          This website
-          <a href="https://github.com/your-repo" target="_blank" rel="noopener noreferrer" aria-label="View source code for This Website on GitHub">
+    @for (project of blok.projects; track project._uid) {
+      <article class="project-item">
+        <div class="project-content">
+          <h3 class="project-title">{{ project.title }}</h3>
+          <a [href]="project.github_link.url"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="project-link github-link">
+            View on GitHub
           </a>
-        </h3>
-        <p class="project-description">
-          Simple, minimalistic personal portfolio for current and future projects.
-        </p>
-        <ul class="project-tags">
-        </ul>
-      </div>
-    </article>
+          <div class="project-description" [innerHTML]="project.description | richText"></div>
+
+          @if (project.link?.url) {
+            <a [href]="project.link.url"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="project-link website-link">
+              Go to project domain
+            </a>
+          }
+
+          <ul class="tech-list">
+            @for (technology of project.technologies; track technology._uid) {
+              <li class="tech-item">{{ technology.text }}</li>
+            }
+          </ul>
+        </div>
+
+        <div class="project-image">
+          <img [src]="project.image.filename" [alt]="project.image.alt">
+        </div>
+      </article>
+    }
   </div>
 </section>
 

@@ -1,17 +1,22 @@
 <section id="experience">
-  <h2>My experience</h2>
+  <h2>{{ blok.title }}</h2>
   <ol class="experience-timeline">
+  @for (experience of blok?.experiences; track experience._uid) {
     <li class="timeline-item">
       <div class="timeline-icon">
+        @if (experience.icon?.filename) {
+          <img [src]="experience.icon.filename" [alt]="experience.icon.alt || 'Timeline icon'">
+        }
       </div>
-      <div class="timeline-date">2022 - 2025</div>
       <article class="timeline-content">
-        <h3>DevNet</h3>
-        <p class="timeline-subtitle">Software Engineer | <strong>Wroclaw, Poland (remote)</strong></p>
+        <h3>{{ experience.title }}</h3>
+        <p class="timeline-subtitle"><p>{{ experience.location }}</p>
         <p>
-          Things i do here.
+          {{ experience.description }}
         </p>
       </article>
+      <span>{{experience.timeline}}</span>
     </li>
+  }
   </ol>
 </section>

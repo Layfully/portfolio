@@ -1,7 +1,13 @@
 <section id="skills">
-  <h2>My Skills</h2>
-  <ul>
-    <li>List entry</li>
+  <h2>{{ blok.title }}</h2>
+  <ul class="skills-container">
+    @for (skill of blok.skills; track skill._uid) {
+      <li class="skill-item">
+        {{ skill.text }}
+      </li>
+    }
   </ul>
+
+
 </section>
 
