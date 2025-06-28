@@ -1,0 +1,19 @@
+// Additional styles if needed
+button {
+  // Ensure the button has proper dimensions
+  min-width: 3rem;
+  min-height: 3rem;
+
+  // Ensure it's always visible
+  opacity: 1;
+  visibility: visible;
+
+  // Add some extra styling
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
