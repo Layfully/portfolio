@@ -8,3 +8,66 @@
   --font-mono: "JetBrains Mono", "monospace";
   --font-sans: "Inter", "sans-serif";
 }
+
+.prose u {
+  @apply decoration-2 decoration-violet-500/70 underline-offset-4;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-x-2 rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+  }
+
+  .btn-primary {
+    @extend .btn;
+    @apply bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 dark:focus-visible:outline-white;
+  }
+
+  .btn-secondary {
+    @extend .btn;
+    @apply border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 focus-visible:outline-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
+  }
+
+  .btn-icon {
+    @apply inline-flex h-12 w-12 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
+  }
+
+  .btn-submit {
+    @apply cursor-pointer inline-flex items-center justify-center gap-x-2 rounded-full bg-slate-900 px-8 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 dark:focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-link {
+    @apply inline-flex items-center justify-center gap-x-2 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-slate-800 transition-colors duration-300 hover:bg-gray-300 dark:bg-purple-950/40 dark:text-purple-200 dark:hover:bg-purple-500/20 dark:hover:text-white;
+  }
+
+  .form-input {
+    @apply w-full rounded-md border bg-slate-100 border-slate-200 px-4 py-3 text-slate-900 placeholder:text-slate-400 transition-colors focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/70 dark:bg-[#111118] dark:border-violet-500/50 dark:text-white dark:placeholder:text-slate-500;
+  }
+
+  .tag-pill {
+    @apply transition-transform hover:scale-110 rounded-full dark:border border-gray-300 shadow  px-4 py-2 transition-colors duration-300 hover:bg-gray-200 dark:border-purple-600/50 dark:bg-purple-950/40 dark:text-purple-200 dark:hover:border-purple-500 dark:hover:bg-purple-500/20 dark:hover:text-white;
+  }
+
+  .timeline-card {
+    @apply relative rounded-lg border bg-gray-50/80 p-6 backdrop-blur-sm border-gray-200 dark:border-purple-800/40 dark:bg-purple-950/20 group-odd:col-start-1 group-even:col-start-3;
+
+    &::after {
+      @apply absolute top-4 h-0 w-0 border-b-8 border-t-8 border-b-transparent border-t-transparent;
+      content: '';
+    }
+    &.group-odd::after {
+      @apply left-full border-l-8 border-l-gray-200 dark:border-l-purple-800/40;
+    }
+    &.group-even::after {
+      @apply right-full border-r-8 border-r-gray-200 dark:border-r-purple-800/40;
+    }
+  }
+
+  .timeline-marker {
+    @apply z-10 col-start-2 row-start-1 flex h-12 w-12 items-center justify-center rounded-full border bg-white place-self-start
+    border-gray-100 ring-4 ring-white
+    shadow-[inset_0_2px_0_rgba(0,0,0,0.08),0_3px_0_4px_rgba(0,0,0,0.05)]
+    dark:border-2 dark:border-purple-600/50 dark:bg-[#0f101e] dark:ring-[#0f101e]
+    dark:shadow-lg dark:shadow-purple-500/50;
+  }
+}
