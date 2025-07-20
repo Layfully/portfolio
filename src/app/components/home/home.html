@@ -1,7 +1,9 @@
-@if (story.content) {
-  @for (blok of story.content.body; track blok._uid) {
-    <app-blok [blok]="blok"></app-blok>
+<main class="main-container">
+  @if (story.content) {
+    @for (blok of story.content.body; track blok._uid) {
+      <app-blok [blok]="blok"></app-blok>
+    }
+  } @else {
+    <p>Loading content...</p>
   }
-} @else {
-  <p>Loading content...</p>
-}
+</main>
