@@ -1,16 +1,8 @@
-<footer class="
-  bg-white border-t border-slate-200
-  dark:bg-slate-950 dark:border-purple-500/30
-  transition-colors duration-300
-">
-  <div class="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-4">
-
-    <p class="text-sm text-slate-500 dark:text-slate-400">
-      ©{{year}} <span class="[&>p]:inline" [innerHTML]="blok.copyright | richText"></span>
+<footer class="border-t border-slate-200 dark:border-purple-500/30">
+  <div class="prose prose-sm prose-p:m-0 dark:prose-invert mx-auto max-w-4xl text-center py-6 px-4">
+    <p class="prose-p:inline">
+      ©{{year}} <span [innerHTML]="blok.copyright | richText"></span>
     </p>
-
-    <p class="text-sm text-slate-500 dark:text-slate-400" [innerHTML]="blok.tech_stack | richText">
-    </p>
-
+    <div [innerHTML]="blok.tech_stack | richText"></div>
   </div>
 </footer>
