@@ -12,13 +12,13 @@ namespace api;
 
 public record ContactFormRequest(string? Email, string? Message);
 
-public class send_email
+public class SendEmail
 {
   private readonly ILogger<SendEmail> _logger;
   private readonly IEmailService _emailService;
   private readonly EmailOptions _emailOptions;
 
-  public send_email(ILogger<SendEmail> logger, IEmailService emailService, IOptions<EmailOptions> emailOptions)
+  public SendEmail(ILogger<SendEmail> logger, IEmailService emailService, IOptions<EmailOptions> emailOptions)
   {
     _logger = logger;
     _emailService = emailService;
