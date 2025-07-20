@@ -63,7 +63,6 @@ public class SendEmail
             if (success)
             {
                 var successResponse = req.CreateResponse(HttpStatusCode.OK);
-                await successResponse.WriteStringAsync("Message sent successfully!");
                 return successResponse;
             }
             else

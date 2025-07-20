@@ -11,52 +11,51 @@
         Thank you for reaching out. I'll get back to you as soon as possible.
       </p>
     </div>
-  } @else {
-    <form #formElement class="mt-10 w-full" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-      <div class="flex flex-col gap-y-6">
-        <input
-          type="email"
-          id="email"
-          formControlName="email"
-          [placeholder]="blok.email_placeholder || 'Your email'"
-          required
-          class="form-input"
-        />
-        <textarea
-          id="message"
-          formControlName="message"
-          [placeholder]="blok.message_placeholder || 'Your message'"
-          required
-          maxlength="5000"
-          rows="6"
-          class="form-input resize-y"
-        ></textarea>
-      </div>
-
-      <div #submitButtonContainer class="mt-10">
-        <button type="submit" [disabled]="!contactForm.valid || submissionStatus === 'submitting'" class="btn-submit">
-          @if (submissionStatus === 'submitting') {
-            <span>Sending...</span>
-            <svg class="animate-spin size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-          } @else {
-            <span>{{ blok.send_text || 'Submit' }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5" aria-hidden="true">
-              <path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.49-.87.99l.01 4.61c0 .71.73 1.2 1.39.91z"/>
-            </svg>
-          }
-        </button>
-      </div>
-
-      @if (submissionStatus === 'error') {
-        <div #errorMessageContainer class="mt-4 rounded-md bg-red-50 p-4 dark:bg-red-900/20 ring-1 ring-inset ring-red-600/20">
-          <p class="text-sm font-medium text-red-800 dark:text-red-300">
-            Sorry, there was an error sending your message. Please try again later.
-          </p>
-        </div>
-      }
-    </form>
   }
+  <form #formElement class="mt-10 w-full" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="flex flex-col gap-y-6">
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        [placeholder]="blok.email_placeholder || 'Your email'"
+        required
+        class="form-input"
+      />
+      <textarea
+        id="message"
+        formControlName="message"
+        [placeholder]="blok.message_placeholder || 'Your message'"
+        required
+        maxlength="5000"
+        rows="6"
+        class="form-input resize-y"
+      ></textarea>
+    </div>
+
+    <div #submitButtonContainer class="mt-10">
+      <button type="submit" [disabled]="!contactForm.valid || submissionStatus === 'submitting'" class="btn-submit">
+        @if (submissionStatus === 'submitting') {
+          <span>Sending...</span>
+          <svg class="animate-spin size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        } @else {
+          <span>{{ blok.send_text || 'Submit' }}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5" aria-hidden="true">
+            <path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.49-.87.99l.01 4.61c0 .71.73 1.2 1.39.91z"/>
+          </svg>
+        }
+      </button>
+    </div>
+
+    @if (submissionStatus === 'error') {
+      <div #errorMessageContainer class="mt-4 rounded-md bg-red-50 p-4 dark:bg-red-900/20 ring-1 ring-inset ring-red-600/20">
+        <p class="text-sm font-medium text-red-800 dark:text-red-300">
+          Sorry, there was an error sending your message. Please try again later.
+        </p>
+      </div>
+    }
+  </form>
 </app-section-wrapper>
