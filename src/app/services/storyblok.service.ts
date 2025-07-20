@@ -15,4 +15,3 @@ export class StoryblokService {
     return this.sbClient.getStory(slug, params);
   }
 }
-

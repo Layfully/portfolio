@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 import { About } from '../about/about';
 import { Hero } from '../hero/hero';
 import { Header } from '../header/header';
