@@ -11,7 +11,7 @@ export interface ContactFormData {
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = '/api/send-email';
+  private apiUrl = '/api/send_email';
   constructor(private http: HttpClient) { }
   /**
    * Sends the contact form data to the backend API.
