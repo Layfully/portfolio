@@ -1,10 +1,18 @@
-<nav>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#contact">Contact</a></li>
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+  <ul class="
+    relative inline-flex items-center rounded-full p-2
+    bg-white/60 ring-1 ring-slate-900/5
+    dark:bg-slate-900/40 dark:ring-1 dark:ring-white/10
+    backdrop-blur-lg shadow-md
+    transition-colors duration-300
+  ">
+    <div class="nav-highlight"></div>
+    @for (section of sections; track section) {
+      <li class="flex">
+        <a [href]="'#' + section"
+           [class.active]="activeSection === section"
+           (click)="onLinkClick(section)">{{ section.charAt(0).toUpperCase() + section.slice(1) }}</a>
+      </li>
+    }
   </ul>
 </nav>
