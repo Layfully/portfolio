@@ -2,8 +2,10 @@ using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using api.Extensions;
 using api.Configuration;
+using Microsoft.Azure.Functions.Worker;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
@@ -13,9 +15,8 @@ builder.Services.AddOptions<EmailOptions>().BindConfiguration("EmailOptions");
 
 builder.Services.AddEmailServices();
 
-// Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
-// builder.Services
-//     .AddApplicationInsightsTelemetryWorkerService()
-//     .ConfigureFunctionsApplicationInsights();
+builder.Services
+    .AddApplicationInsightsTelemetryWorkerService()
+    .ConfigureFunctionsApplicationInsights();
 
 builder.Build().Run();
