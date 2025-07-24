@@ -1,8 +1,8 @@
 <app-section-wrapper id="contact" class="max-w-xl" #contactWrapper>
-  <h1 #contactTitle class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+  <h1 #contactTitle class="text-5xl font-bold text-gray-900 dark:text-white">
     {{ blok.title || 'Contact me' }}
   </h1>
-  <div #contactPrompt class="prose prose-lg dark:prose-invert mt-6 max-w-none" [innerHTML]="blok.prompt | richText"></div>
+  <div #contactPrompt class="prose prose-lg dark:prose-invert mt-16" [innerHTML]="blok.prompt | richText"></div>
 
   @if (submissionStatus === 'success') {
     <div #successMessageContainer class="mt-10 rounded-md bg-green-50 p-4 dark:bg-green-900/20 ring-1 ring-inset ring-green-600/20">

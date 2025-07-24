@@ -1,8 +1,8 @@
 <app-section-wrapper id="experience" class="max-w-5xl" #experienceWrapper>
-  <h2 #experienceTitle class="text-center text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+  <h2 #experienceTitle class="text-5xl font-bold text-gray-900 dark:text-white">
     {{ blok.title }}
   </h2>
-  <div class="relative mt-20">
+  <div class="relative mt-28">
     <div #timelineBar class="absolute left-1/2 -top-[5%] h-[110%] w-1 -translate-x-1/2 bg-gray-200 dark:bg-purple-900/40" aria-hidden="true"></div>
     <ol class="relative space-y-12">
       @for (experience of blok?.experiences; track experience._uid) {

@@ -16,13 +16,12 @@
     <span #wavingHand class="absolute bottom-0 right-0 text-4xl" role="img" aria-label="waving hand">👋</span>
   </div>
 
-  <h1 #introText class="prose dark:prose-invert max-w-4xl text-4xl tracking-tight sm:text-5xl"
+  <div #introText class="prose dark:prose-invert max-w-3xl text-4xl"
       [innerHTML]="blok.introduction | richText"
-  ></h1>
+  ></div>
 
-    <div #buttonGroup class="mt-10 flex flex-wrap items-center justify-center gap-4">
-    <!--suppress HtmlUnknownAnchorTarget -->
-      <a href="#contact" class="btn-primary">
+  <div #buttonGroup class="mt-10 flex gap-4">
+    <a href="#contact" class="btn-primary">
       {{ blok.contact_text || 'Contact me here' }}
       <span aria-hidden="true">→</span>
     </a>
