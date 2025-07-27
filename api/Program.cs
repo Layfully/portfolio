@@ -12,8 +12,10 @@ var builder = FunctionsApplication.CreateBuilder(args);
 builder.ConfigureFunctionsWebApplication();
 
 builder.Services.AddOptions<EmailOptions>().BindConfiguration("EmailOptions");
+builder.Services.AddOptions<GithubOptions>().BindConfiguration("GithubOptions");
 
 builder.Services.AddEmailServices();
+builder.Services.AddHttpClient();
 
 builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
