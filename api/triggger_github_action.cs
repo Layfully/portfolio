@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using api.Configuration;
-
+using System.Web;
 
 namespace api;
 
@@ -27,6 +27,22 @@ public class TriggerGitHubAction
     [Function("trigger_github_action")]
     public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "TriggerBuild")] HttpRequestData req)
     {
+        _logger.LogInformation("Webhook received, attempting to validate secret from URL...");
+
+        var expectedSecret = _githubOptions.WebhookTriggerSecret;
+
+        var query = HttpUtility.ParseQueryString(req.Url.Query);
+        var providedSecret = query["secret"];
+
+        if (string.IsNullOrEmpty(expectedSecret) || !expectedSecret.Equals(providedSecret))
+        {
+            _logger.LogWarning("Invalid or missing secret key in URL. Request rejected.");
+            return req.CreateResponse(HttpStatusCode.Unauthorized);
+        }
+
+
+        _logger.LogInformation("Secret key is valid.");
+
         _logger.LogInformation("Processing request to trigger GitHub Action build.");
 
         if (string.IsNullOrEmpty(_githubOptions.Pat) ||

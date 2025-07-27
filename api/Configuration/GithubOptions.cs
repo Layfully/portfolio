@@ -14,4 +14,7 @@ public class GithubOptions
 
   [Required]
   public string Pat { get; set; } = string.Empty;
+
+  [Required]
+  public string WebhookTriggerSecret { get; set; } = string.Empty;
 }
