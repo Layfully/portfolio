@@ -25,7 +25,7 @@ public class TriggerGitHubAction
   }
 
     [Function("trigger_github_action")]
-    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "TriggerBuild")] HttpRequestData req)
+    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "TriggerBuild")] HttpRequestData req)
     {
         _logger.LogInformation("Processing request to trigger GitHub Action build.");
 
