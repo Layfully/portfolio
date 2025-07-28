@@ -46,7 +46,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           
-          output_location: "dist/portfolio/browser" 
+          app_location: "dist/portfolio/browser"
           skip_app_build: true
           api_location: "api"
         env:
