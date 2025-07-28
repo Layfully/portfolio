@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ElementRef, Inject, PLATFORM_ID } from '@angular/core'; // <-- Import Inject, PLATFORM_ID
+import { isPlatformBrowser } from '@angular/common'; // <-- Import isPlatformBrowser
 
 @Component({
   selector: 'app-header',
@@ -12,14 +13,21 @@ export class Header implements OnInit, OnDestroy {
   private observer?: IntersectionObserver;
   sections: string[] = ['home', 'about', 'projects', 'skills', 'experience', 'contact'];
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
-    setTimeout(() => this.setupObserver(), 100);
+    if (isPlatformBrowser(this.platformId)) {
+      Promise.resolve().then(() => this.setupObserver());
+    }
   }
 
   ngOnDestroy() {
-    this.observer?.disconnect();
+    if (isPlatformBrowser(this.platformId)) {
+      this.observer?.disconnect();
+    }
   }
 
   private setupObserver(): void {
