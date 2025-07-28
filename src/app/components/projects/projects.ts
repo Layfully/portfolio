@@ -6,14 +6,15 @@ import {
   ViewChild,
   ViewChildren,
   ElementRef,
-  QueryList
+  QueryList,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-projects',
@@ -31,11 +32,22 @@ export class Projects implements AfterViewInit, OnDestroy {
 
   private triggers: ScrollTrigger[] = [];
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
-    Promise.resolve().then(() => this.initAnimation());
+    if (isPlatformBrowser(this.platformId)) {
+      Promise.resolve().then(() => this.initAnimation());
+    }
   }
 
   initAnimation(): void {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!this.wrapper?.nativeElement || !this.title?.nativeElement || this.projectCards.length === 0) {
+      console.warn("GSAP animation in ProjectsComponent aborted: target elements not found.");
+      return;
+    }
+
     gsap.from(this.title.nativeElement, {
       opacity: 0,
       y: 30,
@@ -71,9 +83,13 @@ export class Projects implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.triggers.forEach(trigger => trigger.kill());
-    gsap.getTweensOf(this.title.nativeElement).forEach(tween => {
-      tween.kill();
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.triggers.forEach(trigger => trigger.kill());
+      if (this.title?.nativeElement) {
+        gsap.getTweensOf(this.title.nativeElement).forEach(tween => {
+          tween.kill();
+        });
+      }
+    }
   }
 }

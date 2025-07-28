@@ -6,13 +6,14 @@ import {
   ViewChildren,
   ElementRef,
   QueryList,
-  OnDestroy
+  OnDestroy,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-skills',
@@ -32,11 +33,17 @@ export class Skills implements AfterViewInit, OnDestroy {
 
   private tl?: gsap.core.Timeline;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
-    Promise.resolve().then(() => this.initAnimation());
+    if (isPlatformBrowser(this.platformId)) {
+      Promise.resolve().then(() => this.initAnimation());
+    }
   }
 
   initAnimation(): void {
+    gsap.registerPlugin(ScrollTrigger);
+
     if (!this.skillsWrapper?.nativeElement || this.skillTags.length === 0) {
       console.warn("GSAP animation in SkillsComponent aborted: target elements not found.");
       return;
@@ -46,7 +53,7 @@ export class Skills implements AfterViewInit, OnDestroy {
     const titleElement = wrapperElement.querySelector('h2');
     const tagElements = this.skillTags.map(tagRef => tagRef.nativeElement);
 
-    if (!titleElement) return; // Another guard clause
+    if (!titleElement) return;
 
     this.tl = gsap.timeline({
       scrollTrigger: {

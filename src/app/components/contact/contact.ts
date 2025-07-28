@@ -1,12 +1,21 @@
-import { Component, Input, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  PLATFORM_ID,
+  Inject
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common'; // <-- 3. Import
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { ContactService } from '../../services/contact.service';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -32,7 +41,7 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
 
   private successMessageRef?: ElementRef<HTMLDivElement>;
   @ViewChild('successMessageContainer') set successMessageContainer(el: ElementRef<HTMLDivElement> | undefined) {
-    if (el) {
+    if (el && isPlatformBrowser(this.platformId)) {
       this.successMessageRef = el;
       this.animateResultIn(el.nativeElement);
     }
@@ -40,13 +49,17 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
 
   private errorMessageRef?: ElementRef<HTMLDivElement>;
   @ViewChild('errorMessageContainer') set errorMessageContainer(el: ElementRef<HTMLDivElement> | undefined) {
-    if (el) {
+    if (el && isPlatformBrowser(this.platformId)) {
       this.errorMessageRef = el;
       this.animateResultIn(el.nativeElement);
     }
   }
 
-  constructor(private formBuilder: FormBuilder, private contactService: ContactService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private contactService: ContactService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.contactForm = this.formBuilder.group({
@@ -56,16 +69,16 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.initScrollAnimation();
+    if (isPlatformBrowser(this.platformId)) {
+      this.initScrollAnimation();
+    }
   }
 
   public onSubmit(): void {
     if (!this.contactForm.valid || this.submissionStatus === 'submitting') {
       return;
     }
-
     this.submissionStatus = 'submitting';
-
     this.contactService.sendEmail(this.contactForm.value)
       .subscribe({
         next: () => {
@@ -79,24 +92,28 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.initialRevealAnim?.kill();
-
-    gsap.killTweensOf([
-      this.successMessageRef?.nativeElement,
-      this.errorMessageRef?.nativeElement
-    ]);
-
-    if (this.resultTimeoutId) {
-      clearTimeout(this.resultTimeoutId);
+    if (isPlatformBrowser(this.platformId)) {
+      this.initialRevealAnim?.kill();
+      gsap.killTweensOf([
+        this.successMessageRef?.nativeElement,
+        this.errorMessageRef?.nativeElement
+      ]);
+      if (this.resultTimeoutId) {
+        clearTimeout(this.resultTimeoutId);
+      }
     }
   }
 
   private initScrollAnimation(): void {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!this.contactWrapper || !this.formElement) return;
+
     const elementsToAnimate = [
       this.contactTitle.nativeElement,
       this.contactPrompt.nativeElement,
       ...gsap.utils.toArray(this.formElement.nativeElement.querySelectorAll('.form-input')),
-      this.formElement.nativeElement.querySelector('.btn-submit') // More specific selector
+      this.formElement.nativeElement.querySelector('.btn-submit')
     ];
 
     this.initialRevealAnim = gsap.from(elementsToAnimate, {
@@ -113,9 +130,6 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  /**
-   * Manages the "In -> Wait -> Out -> Reset" lifecycle for the submission result message.
-   */
   private handleSubmissionResult(result: 'success' | 'error'): void {
     this.submissionStatus = result;
 
@@ -136,12 +150,7 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private animateResultIn(element: HTMLElement): void {
-    gsap.from(element, {
-      opacity: 0,
-      y: 20,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
+    gsap.from(element, { opacity: 0, y: 20, duration: 0.5, ease: 'power2.out' });
   }
 
   private animateResultOut(element: HTMLElement, onComplete: () => void): void {

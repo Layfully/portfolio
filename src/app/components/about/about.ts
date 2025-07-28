@@ -6,15 +6,15 @@ import {
   ViewChild,
   ViewChildren,
   ElementRef,
-  QueryList
+  QueryList,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
-
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 @Component({
   selector: 'app-about',
@@ -31,22 +31,31 @@ export class About implements AfterViewInit, OnDestroy {
 
   private timeline?: gsap.core.Timeline;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
-    Promise.resolve().then(() => this.initAnimation());
+    if (isPlatformBrowser(this.platformId)) {
+      Promise.resolve().then(() => this.initAnimation());
+    }
   }
 
   initAnimation(): void {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!this.wrapper?.nativeElement || !this.title?.nativeElement || this.contentBlocks.length === 0) {
+      console.warn("GSAP animation in AboutComponent aborted: target elements not found.");
+      return;
+    }
+
     const wrapperEl = this.wrapper.nativeElement;
     const titleEl = this.title.nativeElement;
     const contentEls = this.contentBlocks.map(ref => ref.nativeElement);
-
-    if (!titleEl || contentEls.length === 0) return;
 
     this.timeline = gsap.timeline({
       scrollTrigger: {
         trigger: wrapperEl,
         start: 'top 80%',
-        toggleActions: 'play none none none' // Animate once and don't reverse
+        toggleActions: 'play none none none'
       }
     });
 
@@ -63,10 +72,12 @@ export class About implements AfterViewInit, OnDestroy {
         duration: 0.8,
         ease: 'power3.out',
         stagger: 0.2
-      }, '-=0.5'); // Start this animation 0.5s before the previous one ends for a smooth overlap
+      }, '-=0.5');
   }
 
   ngOnDestroy(): void {
-    this.timeline?.kill();
+    if (isPlatformBrowser(this.platformId)) {
+      this.timeline?.kill();
+    }
   }
 }

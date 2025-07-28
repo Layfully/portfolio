@@ -6,18 +6,18 @@ import {
   ViewChild,
   ViewChildren,
   ElementRef,
-  QueryList
+  QueryList,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
-
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-
 @Component({
   selector: 'app-experience',
-  standalone: true, // Assuming standalone
+  standalone: true,
   imports: [SectionWrapper],
   templateUrl: './experience.html',
   styleUrl: './experience.scss'
@@ -32,11 +32,22 @@ export class Experience implements AfterViewInit, OnDestroy {
 
   private timelines: gsap.core.Timeline[] = [];
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
-    Promise.resolve().then(() => this.initAnimation());
+    if (isPlatformBrowser(this.platformId)) {
+      Promise.resolve().then(() => this.initAnimation());
+    }
   }
 
   initAnimation(): void {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (!this.wrapper?.nativeElement || !this.title?.nativeElement || !this.timelineBar?.nativeElement || this.items.length === 0) {
+      console.warn("GSAP animation in ExperienceComponent aborted: target elements not found.");
+      return;
+    }
+
     const wrapperEl = this.wrapper.nativeElement;
 
     const mainTl = gsap.timeline({
@@ -64,7 +75,7 @@ export class Experience implements AfterViewInit, OnDestroy {
       const itemTl = gsap.timeline({
         scrollTrigger: {
           trigger: itemEl,
-          start: 'top 85%', // Trigger when the item is 85% from the top of the viewport
+          start: 'top 85%',
           toggleActions: 'play none none none'
         }
       });
@@ -77,8 +88,8 @@ export class Experience implements AfterViewInit, OnDestroy {
       );
 
       const isOdd = index % 2 === 0;
-      const cardX = isOdd ? -100 : 100; // Odd items (left card) slide from left, even items from right
-      const timeX = isOdd ? 100 : -100;  // Time is on the opposite side
+      const cardX = isOdd ? -100 : 100;
+      const timeX = isOdd ? 100 : -100;
 
       itemTl
         .from(card, { xPercent: cardX, opacity: 0, duration: 0.7, ease: 'power3.out' }, '<')
@@ -89,6 +100,8 @@ export class Experience implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.timelines.forEach(tl => tl.kill());
+    if (isPlatformBrowser(this.platformId)) {
+      this.timelines.forEach(tl => tl.kill());
+    }
   }
 }

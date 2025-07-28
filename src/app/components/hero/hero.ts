@@ -1,13 +1,14 @@
-// src/app/components/hero/hero.ts
-
 import {
   Component,
   Input,
   AfterViewInit,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  PLATFORM_ID,
+  Inject
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 
@@ -15,7 +16,7 @@ import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-hero',
-  standalone: true, // Assuming standalone
+  standalone: true,
   imports: [RichTextPipe, SectionWrapper],
   templateUrl: './hero.html',
   styleUrl: './hero.scss'
@@ -30,11 +31,20 @@ export class Hero implements AfterViewInit, OnDestroy {
 
   private tl?: gsap.core.Timeline;
 
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngAfterViewInit(): void {
-    this.initAnimation();
+    if (isPlatformBrowser(this.platformId)) {
+      this.initAnimation();
+    }
   }
 
   initAnimation(): void {
+    if (!this.profileImage || !this.wavingHand || !this.introText || !this.buttonGroup) {
+      console.warn("GSAP animation in HeroComponent aborted: one or more target elements not found.");
+      return;
+    }
+
     this.tl = gsap.timeline({
       delay: 0.3
     });
@@ -80,6 +90,8 @@ export class Hero implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.tl?.kill();
+    if (isPlatformBrowser(this.platformId)) {
+      this.tl?.kill();
+    }
   }
 }
