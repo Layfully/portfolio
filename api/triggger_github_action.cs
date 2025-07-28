@@ -13,16 +13,16 @@ namespace api;
 
 public class TriggerGitHubAction
 {
-  private readonly ILogger<TriggerGitHubAction> _logger;
-  private readonly HttpClient _httpClient;
-  private readonly GithubOptions _githubOptions;
+    private readonly ILogger<TriggerGitHubAction> _logger;
+    private readonly HttpClient _httpClient;
+    private readonly GithubOptions _githubOptions;
 
-  public TriggerGitHubAction(ILogger<TriggerGitHubAction> logger, IHttpClientFactory httpClientFactory, IOptions<GithubOptions> githubOptions)
-  {
-    _logger = logger;
-    _httpClient = httpClientFactory.CreateClient();
-    _githubOptions = githubOptions.Value;
-  }
+    public TriggerGitHubAction(ILogger<TriggerGitHubAction> logger, IHttpClientFactory httpClientFactory, IOptions<GithubOptions> githubOptions)
+    {
+        _logger = logger;
+        _httpClient = httpClientFactory.CreateClient();
+        _githubOptions = githubOptions.Value;
+    }
 
     [Function("trigger_github_action")]
     public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "TriggerBuild")] HttpRequestData req)

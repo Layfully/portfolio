@@ -1,12 +1,11 @@
+using api.Configuration;
+using api.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Text.Json;
-using api.Models;
-using api.Services.Interfaces;
-using api.Configuration;
 
 namespace api;
 
@@ -31,7 +30,7 @@ public class SendEmail
         _logger.LogInformation("Processing contact form submission.");
 
         if (string.IsNullOrEmpty(_emailOptions.ToEmailAddress) ||
-            string.IsNullOrEmpty(_emailOptions.FromEmailAddress) ||
+                string.IsNullOrEmpty(_emailOptions.FromEmailAddress) ||
             string.IsNullOrEmpty(_emailOptions.SendGridApiKey))
         {
             _logger.LogError("Server configuration error: Required email configuration is missing.");

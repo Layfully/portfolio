@@ -1,11 +1,9 @@
+using api.Configuration;
+using api.Extensions;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using api.Extensions;
-using api.Configuration;
-using Microsoft.Azure.Functions.Worker;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
