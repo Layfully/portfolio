@@ -1,8 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using api.Configuration;
 using api.Services;
 using api.Services.Interfaces;
-using api.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SendGrid;
 
 namespace api.Extensions;

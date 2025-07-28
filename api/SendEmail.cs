@@ -1,11 +1,11 @@
+using System.Net;
+using System.Text.Json;
 using api.Configuration;
 using api.Services.Interfaces;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Text.Json;
 
 namespace api;
 
@@ -13,16 +13,16 @@ public record ContactFormRequest(string? Email, string? Message);
 
 public class SendEmail
 {
-  private readonly ILogger<SendEmail> _logger;
-  private readonly IEmailService _emailService;
-  private readonly EmailOptions _emailOptions;
+    private readonly ILogger<SendEmail> _logger;
+    private readonly IEmailService _emailService;
+    private readonly EmailOptions _emailOptions;
 
-  public SendEmail(ILogger<SendEmail> logger, IEmailService emailService, IOptions<EmailOptions> emailOptions)
-  {
-    _logger = logger;
-    _emailService = emailService;
-    _emailOptions = emailOptions.Value;
-  }
+    public SendEmail(ILogger<SendEmail> logger, IEmailService emailService, IOptions<EmailOptions> emailOptions)
+    {
+        _logger = logger;
+        _emailService = emailService;
+        _emailOptions = emailOptions.Value;
+    }
 
     [Function("send_email")]
     public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestData req)

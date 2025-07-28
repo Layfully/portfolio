@@ -1,9 +1,9 @@
-using api.Services.Interfaces;
 using api.Configuration;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using api.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace api.Services;
 

@@ -1,13 +1,13 @@
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using api.Configuration;
 using System.Web;
+using api.Configuration;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace api;
 
