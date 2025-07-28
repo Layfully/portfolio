@@ -21,6 +21,6 @@
     <app-contact [blok]="blok"></app-contact>
   }
   @case ('footer') {
-    <app-footer [blok]="blok"></app-footer>
+    <app-footer ngSkipHydration [blok]="blok"></app-footer>
   }
 }

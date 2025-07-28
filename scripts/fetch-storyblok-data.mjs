@@ -28,6 +28,7 @@ async function fetchAllData() {
   try {
     const { data } = await storyblokApi.get('cdn/stories', {
       version: 'published',
+      starts_with: 'portfolio',
       per_page: 100,
     });
 
