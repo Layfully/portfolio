@@ -38,12 +38,10 @@ async function fetchAllData() {
     fs.writeFileSync(allDataPath, JSON.stringify(stories, null, 2));
     console.log(`✅  Successfully saved ${stories.length} stories to ${allDataPath}`);
 
-    const slugs = stories.map(story => `/${story.full_slug}`);
-    const staticRoutes = ['/'];
-    const allRoutes = [...staticRoutes, ...slugs].join('\n');
+    const allRoutes = '/';
 
     fs.writeFileSync(routesFilePath, allRoutes);
-    console.log(`✅  Successfully generated routes file at ${routesFilePath}`);
+    console.log(`✅  Successfully generated routes file with the single route: /`);
 
   } catch (error) {
     console.error('❌ Error fetching data from Storyblok:', error);
