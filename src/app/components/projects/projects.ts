@@ -10,7 +10,7 @@ import {
   PLATFORM_ID,
   Inject
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { gsap } from 'gsap';
@@ -19,7 +19,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [SectionWrapper, RichTextPipe],
+  imports: [SectionWrapper, RichTextPipe, NgOptimizedImage],
   templateUrl: './projects.html',
   styleUrl: './projects.scss'
 })

@@ -40,8 +40,12 @@
           </ul>
         </div>
         <div class="relative aspect-4/3 h-full pointer-events-none">
-          <img [src]="project.image.filename"
+          <img [ngSrc]="project.image.filename"
                [alt]="project.image.alt"
+               width="448"
+               height="336"
+               ngSrcset="448w, 896w"
+               sizes="(max-width: 768px) 100vw, 448px"
                class="absolute -right-15 w-[28rem] h-[25rem] rounded-xl object-cover shadow-2xl transition-transform duration-200 group-even:-left-41.5 group-hover:-translate-x-5 group-hover:-rotate-2 group-hover:scale-110 group-hover:translate-y-5 group-even:group-hover:rotate-2 group-even:group-hover:translate-x-5" />
         </div>
       </article>

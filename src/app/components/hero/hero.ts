@@ -8,7 +8,7 @@ import {
   PLATFORM_ID,
   Inject
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 
@@ -17,7 +17,7 @@ import { gsap } from 'gsap';
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [RichTextPipe, SectionWrapper],
+  imports: [RichTextPipe, SectionWrapper, NgOptimizedImage],
   templateUrl: './hero.html',
   styleUrl: './hero.scss'
 })

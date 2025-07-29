@@ -7,8 +7,13 @@
       <div class="relative h-32 w-32">
         <img
           class="h-full w-full rounded-full object-cover object-[left_85%]"
-          [src]="blok.profile_image.filename || 'https://placehold.co/200x200/png'"
-          [alt]="blok.profile_image.alt || 'Profile Photo'"
+          [ngSrc]="blok.profile_image.filename"
+          [alt]="blok.profile_image.alt"
+          width="128"
+          height="128"
+          priority
+          ngSrcset="128w, 256w"
+          sizes="8rem"
         />
         <div class="absolute inset-0 rounded-full shadow-[inset_0_2px_6px_0_rgba(0,0,0,0.7)] dark:shadow-[inset_0_2px_4px_0_rgba(0,0,0,0.7)]" aria-hidden="true"></div>
       </div>
