@@ -21,8 +21,8 @@ import { Projects } from '../projects/projects';
     Projects
   ],
   templateUrl: './blok-component.html',
-  styleUrl: './blok-component.scss'
 })
+
 export class BlokComponent {
   @Input() blok: any;
 }

@@ -1,4 +1,4 @@
-<main class="main-container">
+<main>
   @if (story.content) {
     @for (blok of story.content.body; track blok._uid) {
       <app-blok [blok]="blok"></app-blok>

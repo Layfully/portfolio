@@ -1,4 +1,4 @@
-<app-section-wrapper id="experience" class="max-w-5xl" #experienceWrapper>
+<app-section-wrapper id="Experience" class="max-w-5xl" #experienceWrapper>
   <h2 #experienceTitle class="title">
     {{ blok.title }}
   </h2>
@@ -6,8 +6,8 @@
     <div #timelineBar class="absolute left-1/2 -top-[5%] h-[110%] w-1 -translate-x-1/2 bg-gray-200 dark:bg-purple-900/40" aria-hidden="true"></div>
     <ol class="relative space-y-12">
       @for (experience of blok?.experiences; track experience._uid) {
-        <li #experienceItem class="group grid grid-cols-[1fr_auto_1fr] items-start gap-x-6">
-          <article class="timeline-card row-start-1">
+        <li #experienceItem class="group grid grid-cols-[1fr_auto_1fr] gap-x-6">
+          <article class="timeline-card">
             <h3 class="font-bold text-gray-900 dark:text-white">{{ experience.title }}</h3>
             <p class="mt-1 text-sm text-gray-600 dark:text-purple-300">{{ experience.location }}</p>
             <p class="mt-4 text-gray-700 dark:text-gray-300">{{ experience.description }}</p>
@@ -15,11 +15,11 @@
           <div class="row-start-1 -mt-0.5 flex h-12 items-center
                       group-odd:col-start-3
                       group-even:col-start-1 group-even:justify-end">
-            <time class="text-gray-600 dark:text-purple-300 group-even:text-right">{{ experience.timeline }}</time>
+            <time class="text-gray-600 dark:text-purple-300">{{ experience.timeline }}</time>
           </div>
           <div class="timeline-marker">
             @if (experience.icon?.filename) {
-              <img class="h-6 w-6" [src]="experience.icon.filename" [alt]="experience.icon.alt || 'Timeline icon'">
+              <img class="h-6 w-6" [src]="experience.icon.filename" [alt]="experience.icon.alt">
             }
           </div>
         </li>

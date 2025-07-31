@@ -17,10 +17,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-experience',
-  standalone: true,
   imports: [SectionWrapper],
   templateUrl: './experience.html',
-  styleUrl: './experience.scss'
 })
 export class Experience implements AfterViewInit, OnDestroy {
   @Input() blok: any;
@@ -44,7 +42,6 @@ export class Experience implements AfterViewInit, OnDestroy {
     gsap.registerPlugin(ScrollTrigger);
 
     if (!this.wrapper?.nativeElement || !this.title?.nativeElement || !this.timelineBar?.nativeElement || this.items.length === 0) {
-      console.warn("GSAP animation in ExperienceComponent aborted: target elements not found.");
       return;
     }
 

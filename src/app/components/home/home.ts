@@ -6,26 +6,19 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   imports: [BlokComponent],
-  templateUrl: './home.html',
-  styleUrl: './home.scss'
+  templateUrl: './home.html'
 })
 export class Home implements OnInit, OnDestroy {
-  story: any = { content: null };
-  private storySubscription: Subscription | undefined;
+  story: any = {};
+  storySubscription: Subscription | undefined;
 
   constructor(private storyblokService: StoryblokService) {}
 
   ngOnInit() {
-    this.storySubscription = this.storyblokService.getStory('portfolio').subscribe(data => {
-      if (data) {
-        this.story = data;
-      }
-    });
+    this.storySubscription = this.storyblokService.getStory('portfolio').subscribe(data => this.story = data);
   }
 
-  ngOnDestroy() {
-    if (this.storySubscription) {
-      this.storySubscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.storySubscription?.unsubscribe();
   }
 }

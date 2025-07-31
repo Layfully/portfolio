@@ -1,9 +1,5 @@
-<app-section-wrapper id="about" class="max-w-3xl" #aboutWrapper>
-  <h2 #aboutTitle class="title">
-    {{ blok.title || 'About Me' }}
-  </h2>
-  <div class="prose prose-lg dark:prose-invert mt-6 max-w-none">
-    <div #aboutContent [innerHTML]="blok.biography | richText"></div>
-    <div #aboutContent [innerHTML]="blok.interests | richText"></div>
+<app-section-wrapper id="About" class="max-w-3xl" #aboutWrapper>
+  <h2 #aboutTitle class="title">{{ blok.title }}</h2>
+  <div #aboutContent class="prose prose-lg dark:prose-invert mt-6" [innerHTML]="blok.biography | richText">
   </div>
 </app-section-wrapper>

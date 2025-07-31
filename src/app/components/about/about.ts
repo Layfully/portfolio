@@ -19,8 +19,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 @Component({
   selector: 'app-about',
   imports: [RichTextPipe, SectionWrapper],
-  templateUrl: './about.html',
-  styleUrl: './about.scss'
+  templateUrl: './about.html'
 })
 export class About implements AfterViewInit, OnDestroy {
   @Input() blok: any;
@@ -29,7 +28,7 @@ export class About implements AfterViewInit, OnDestroy {
   @ViewChild('aboutTitle') title!: ElementRef<HTMLHeadingElement>;
   @ViewChildren('aboutContent') contentBlocks!: QueryList<ElementRef<HTMLDivElement>>;
 
-  private timeline?: gsap.core.Timeline;
+  private tl?: gsap.core.Timeline;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -43,7 +42,6 @@ export class About implements AfterViewInit, OnDestroy {
     gsap.registerPlugin(ScrollTrigger);
 
     if (!this.wrapper?.nativeElement || !this.title?.nativeElement || this.contentBlocks.length === 0) {
-      console.warn("GSAP animation in AboutComponent aborted: target elements not found.");
       return;
     }
 
@@ -51,7 +49,7 @@ export class About implements AfterViewInit, OnDestroy {
     const titleEl = this.title.nativeElement;
     const contentEls = this.contentBlocks.map(ref => ref.nativeElement);
 
-    this.timeline = gsap.timeline({
+    this.tl = gsap.timeline({
       scrollTrigger: {
         trigger: wrapperEl,
         start: 'top 80%',
@@ -59,7 +57,7 @@ export class About implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.timeline
+    this.tl
       .from(titleEl, {
         opacity: 0,
         y: 50,
@@ -76,8 +74,6 @@ export class About implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.timeline?.kill();
-    }
+    this.tl?.kill();
   }
 }

@@ -1,18 +1,16 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef, Inject, PLATFORM_ID } from '@angular/core'; // <-- Import Inject, PLATFORM_ID
-import { isPlatformBrowser } from '@angular/common'; // <-- Import isPlatformBrowser
+import { Component, Input, OnInit, OnDestroy, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.html',
-  styleUrl: './header.scss'
+  templateUrl: './header.html'
 })
 export class Header implements OnInit, OnDestroy {
   @Input() blok: any;
 
-  activeSection: string = 'home';
+  activeSection: string = 'Home';
   private observer?: IntersectionObserver;
-  sections: string[] = ['home', 'about', 'projects', 'skills', 'experience', 'contact'];
-
+  protected readonly sections = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Contact'];
   constructor(
     private elementRef: ElementRef,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -25,9 +23,7 @@ export class Header implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.observer?.disconnect();
-    }
+    this.observer?.disconnect();
   }
 
   private setupObserver(): void {
@@ -51,8 +47,6 @@ export class Header implements OnInit, OnDestroy {
         this.observer!.observe(element);
       }
     });
-
-    this.updateHighlight();
   }
 
   private updateHighlight(): void {

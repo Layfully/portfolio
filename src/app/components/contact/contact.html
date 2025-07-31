@@ -1,56 +1,49 @@
-<app-section-wrapper id="contact" class="max-w-xl" #contactWrapper>
-  <h1 #contactTitle class="title">
-    {{ blok.title || 'Contact me' }}
-  </h1>
+<app-section-wrapper id="Contact" class="max-w-xl" #contactWrapper>
+  <h1 #contactTitle class="title">{{ blok.title }}</h1>
   <div #contactPrompt class="prose prose-lg dark:prose-invert mt-16" [innerHTML]="blok.prompt | richText"></div>
 
   @if (submissionStatus === 'success') {
-    <div #successMessageContainer class="mt-10 rounded-md bg-green-50 p-4 dark:bg-green-900/20 ring-1 ring-inset ring-green-600/20">
+    <div #successMessageContainer class="toast bg-green-50  dark:bg-green-900/20 ring-green-600/20">
       <h3 class="text-lg font-medium text-green-800 dark:text-green-200">Message Sent!</h3>
       <p class="mt-2 text-sm text-green-700 dark:text-green-300">
         Thank you for reaching out. I'll get back to you as soon as possible.
       </p>
     </div>
   }
-  <form #formElement class="mt-10 w-full" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-    <div class="flex flex-col gap-y-6">
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        [placeholder]="blok.email_placeholder || 'Your email'"
-        required
-        class="form-input"
-      />
-      <textarea
-        id="message"
-        formControlName="message"
-        [placeholder]="blok.message_placeholder || 'Your message'"
-        required
-        maxlength="5000"
-        rows="6"
-        class="form-input resize-y"
-      ></textarea>
-    </div>
 
-    <div #submitButtonContainer class="mt-10">
-      <button type="submit" [disabled]="!contactForm.valid || submissionStatus === 'submitting'" class="btn-submit">
-        @if (submissionStatus === 'submitting') {
-          <span>Sending...</span>
-          <svg fill="none" class="animate-spin size-5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/><path fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5 0 0 5 0 12h4zm2 5a8 8 0 0 1-2-5H0c0 3 1 6 3 8l3-3z" class="opacity-75"/></svg>
-        } @else {
-          <span>{{ blok.send_text || 'Submit' }}</span>
-          <svg fill="currentColor" aria-hidden="true" class="size-5" viewBox="0 0 24 24"><path d="m3 20 18-7v-2L3 4 2 5v4l1 1 14 2-14 2-1 1v4l1 1z"/></svg>
-        }
-      </button>
-    </div>
+  @if (submissionStatus === 'error') {
+    <p #errorMessageContainer class="toast bg-red-50 dark:bg-red-900/20 ring-red-600/20 text-red-800 dark:text-red-300">
+      Sorry, there was an error sending your message. Please try again later.
+    </p>
+  }
 
-    @if (submissionStatus === 'error') {
-      <div #errorMessageContainer class="mt-4 rounded-md bg-red-50 p-4 dark:bg-red-900/20 ring-1 ring-inset ring-red-600/20">
-        <p class="text-sm font-medium text-red-800 dark:text-red-300">
-          Sorry, there was an error sending your message. Please try again later.
-        </p>
-      </div>
-    }
+  <form #formElement class="mt-6 w-full flex flex-col gap-y-6" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      [placeholder]="blok.email_placeholder"
+      required
+      class="form-input"
+    />
+    <textarea
+      id="message"
+      formControlName="message"
+      [placeholder]="blok.message_placeholder"
+      required
+      maxlength="5000"
+      rows="6"
+      class="form-input resize-y"
+    ></textarea>
+
+    <button type="submit" [disabled]="!contactForm.valid || submissionStatus === 'submitting'" class="btn-submit">
+      @if (submissionStatus === 'submitting') {
+        <span>Sending...</span>
+        <svg class="animate-spin icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/><path d="M4 12a8 8 0 0 1 8-8V0C5 0 0 5 0 12h4zm2 5a8 8 0 0 1-2-5H0c0 3 1 6 3 8l3-3z"/></svg>
+      } @else {
+        <span>{{ blok.send_text }}</span>
+        <svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="m3 20 18-7v-2L3 4 2 5v4l1 1 14 2-14 2-1 1v4l1 1z"/></svg>
+      }
+    </button>
   </form>
 </app-section-wrapper>

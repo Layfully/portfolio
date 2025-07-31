@@ -7,9 +7,9 @@ import {
   ViewChild,
   ElementRef,
   PLATFORM_ID,
-  Inject
+  Inject, ChangeDetectionStrategy
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common'; // <-- 3. Import
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
@@ -21,10 +21,9 @@ type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 @Component({
   selector: 'app-contact',
-  standalone: true,
   imports: [RichTextPipe, ReactiveFormsModule, SectionWrapper],
   templateUrl: './contact.html',
-  styleUrl: './contact.scss'
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Contact implements OnInit, AfterViewInit, OnDestroy {
   @Input() blok: any;
@@ -84,8 +83,7 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
         next: () => {
           this.handleSubmissionResult('success');
         },
-        error: (err) => {
-          console.error('Form submission failed:', err);
+        error: () => {
           this.handleSubmissionResult('error');
         }
       });

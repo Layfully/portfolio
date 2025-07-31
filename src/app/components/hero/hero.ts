@@ -16,10 +16,8 @@ import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-hero',
-  standalone: true,
   imports: [RichTextPipe, SectionWrapper, NgOptimizedImage],
-  templateUrl: './hero.html',
-  styleUrl: './hero.scss'
+  templateUrl: './hero.html'
 })
 export class Hero implements AfterViewInit, OnDestroy {
   @Input() blok: any;
@@ -41,7 +39,6 @@ export class Hero implements AfterViewInit, OnDestroy {
 
   initAnimation(): void {
     if (!this.profileImage || !this.wavingHand || !this.introText || !this.buttonGroup) {
-      console.warn("GSAP animation in HeroComponent aborted: one or more target elements not found.");
       return;
     }
 
@@ -77,11 +74,12 @@ export class Hero implements AfterViewInit, OnDestroy {
       .to(this.wavingHand.nativeElement, {
         keyframes: {
           '0%': { rotate: 0 },
-          '25%': { rotate: -15 },
-          '50%': { rotate: 15 },
-          '75%': { rotate: -15 },
+          '25%': { rotate: -20 },
+          '50%': { rotate: 20 },
+          '75%': { rotate: -20 },
           '100%': { rotate: 0 }
         },
+        transformOrigin: '75% 75%',
         repeat: -1,
         repeatDelay: 1.5,
         duration: 0.7,
@@ -90,8 +88,6 @@ export class Hero implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.tl?.kill();
-    }
+    this.tl?.kill();
   }
 }

@@ -4,8 +4,7 @@ import { RichTextPipe } from '../../pipes/rich-text-pipe';
 @Component({
   selector: 'app-footer',
   imports: [RichTextPipe],
-  templateUrl: './footer.html',
-  styleUrl: './footer.scss'
+  templateUrl: './footer.html'
 })
 export class Footer {
   @Input() blok: any;

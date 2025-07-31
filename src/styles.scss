@@ -51,6 +51,21 @@
 }
 
 @layer components {
+  .nav-highlight {
+    @apply absolute top-2 left-0 h-9 rounded-full bg-white shadow-inner dark:bg-slate-800 dark:shadow-none duration-300;
+  }
+
+  .header-link {
+    @apply relative mx-5 my-2 text-sm font-medium duration-300 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white;
+  }
+
+  .header-link.active {
+    @apply text-slate-900 dark:text-white;
+  }
+  .toast {
+    @apply w-full mt-6 rounded-md p-4 ring-1 ring-inset ;
+  }
+
   .title {
     @apply text-5xl font-bold text-gray-900 dark:text-white;
   }

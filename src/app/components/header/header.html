@@ -1,17 +1,19 @@
-<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-20">
+
   <ul class="
-    relative inline-flex items-center rounded-full p-2
+    inline-flex rounded-full p-2
     bg-white/60 ring-1 ring-slate-900/5
     dark:bg-slate-900/40 dark:ring-1 dark:ring-white/10
     backdrop-blur-lg shadow-md
-    transition-colors duration-300
+    duration-300
   ">
-    <div class="nav-highlight"></div>
+    <li class="nav-highlight"></li>
     @for (section of sections; track section) {
       <li class="flex">
         <a [href]="'#' + section"
+           class="header-link"
            [class.active]="activeSection === section"
-           (click)="onLinkClick(section)">{{ section.charAt(0).toUpperCase() + section.slice(1) }}</a>
+           (click)="onLinkClick(section)">{{ section }}</a>
       </li>
     }
   </ul>

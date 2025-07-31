@@ -1,4 +1,4 @@
-<app-section-wrapper id="home" class="max-w-3xl">
+<app-section-wrapper id="Home" class="max-w-3xl">
   <div class="absolute -top-1/4 left-0 h-1/2 w-1/2 rounded-full bg-violet-600/5 blur-3xl dark:bg-violet-500/15" aria-hidden="true"></div>
   <div class="absolute -bottom-1/4 right-0 h-1/2 w-1/2 rounded-full bg-sky-600/5 blur-3xl dark:bg-sky-500/10" aria-hidden="true"></div>
 
@@ -27,11 +27,11 @@
 
   <div #buttonGroup class="mt-10 flex gap-4">
     <a href="#contact" class="btn-primary">
-      {{ blok.contact_text || 'Contact me here' }}
+      {{ blok.contact_text}}
       <span aria-hidden="true">→</span>
     </a>
     <a [href]="blok.cv.filename" download class="btn-secondary">
-      {{ blok.download_text || 'Download CV' }}
+      {{ blok.download_text}}
       <svg fill="currentColor" aria-hidden="true" class="size-4" viewBox="0 0 16 16"><path d="M7.3 10.3a.8.8 0 0 0 1.5 0v-8l2 2a.8.8 0 1 0 1-1L8.5 0a.8.8 0 0 0-1 0L4.2 3.2a.8.8 0 1 0 1 1l2-1.9v8ZM3.8 13a.8.8 0 0 0 0 1.5h8.4a.8.8 0 0 0 0-1.5H3.8Z"/></svg>
     </a>
     <a [href]="blok.linkedin_url" target="_blank" rel="noopener noreferrer" class="btn-icon">

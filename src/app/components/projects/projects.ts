@@ -18,10 +18,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-projects',
-  standalone: true,
   imports: [SectionWrapper, RichTextPipe, NgOptimizedImage],
-  templateUrl: './projects.html',
-  styleUrl: './projects.scss'
+  templateUrl: './projects.html'
 })
 export class Projects implements AfterViewInit, OnDestroy {
   @Input() blok: any;
@@ -44,7 +42,6 @@ export class Projects implements AfterViewInit, OnDestroy {
     gsap.registerPlugin(ScrollTrigger);
 
     if (!this.wrapper?.nativeElement || !this.title?.nativeElement || this.projectCards.length === 0) {
-      console.warn("GSAP animation in ProjectsComponent aborted: target elements not found.");
       return;
     }
 
