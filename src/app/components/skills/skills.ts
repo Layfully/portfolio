@@ -17,18 +17,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-skills',
-  standalone: true,
   imports: [
     SectionWrapper
   ],
   templateUrl: './skills.html',
-  styleUrl: './skills.scss'
 })
 export class Skills implements AfterViewInit, OnDestroy {
   @Input() blok: any;
-
   @ViewChild('skillsWrapper', { read: ElementRef }) skillsWrapper!: ElementRef<HTMLElement>;
-
   @ViewChildren('skillTag') skillTags!: QueryList<ElementRef<HTMLLIElement>>;
 
   private tl?: gsap.core.Timeline;
@@ -45,7 +41,6 @@ export class Skills implements AfterViewInit, OnDestroy {
     gsap.registerPlugin(ScrollTrigger);
 
     if (!this.skillsWrapper?.nativeElement || this.skillTags.length === 0) {
-      console.warn("GSAP animation in SkillsComponent aborted: target elements not found.");
       return;
     }
 

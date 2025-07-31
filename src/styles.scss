@@ -51,6 +51,9 @@
 }
 
 @layer components {
+  .title {
+    @apply text-5xl font-bold text-gray-900 dark:text-white;
+  }
   .icon {
     @apply w-5 h-5 fill-current;
   }
