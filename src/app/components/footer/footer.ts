@@ -8,5 +8,4 @@ import { RichTextPipe } from '../../pipes/rich-text-pipe';
 })
 export class Footer {
   @Input() blok: any;
-  year: number = new Date().getFullYear();
 }
