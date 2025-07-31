@@ -8,11 +8,6 @@ import { renderRichText } from '@storyblok/js';
 export class RichTextPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
 
-  transform(value: any): SafeHtml {
-    if (!value) {
-      return '';
-    }
-    const html = renderRichText(value) ?? '';
-    return this.sanitizer.bypassSecurityTrustHtml(html);
-  }
+  transform = (value: any): SafeHtml =>
+    this.sanitizer.bypassSecurityTrustHtml(renderRichText(value) ?? '');
 }

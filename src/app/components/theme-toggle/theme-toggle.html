@@ -1,17 +1,17 @@
 <button
   (click)="themeService.toggleTheme()"
-  class="hover:scale-125 cursor-pointer fixed bottom-6 right-6 w-12 h-12 hover:bg-gray-100 dark:hover:bg-neutral-950 dark:border dark:border-purple-600/50 text-gray-800 dark:text-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
+  class="hover:scale-125 cursor-pointer fixed bottom-6 right-6 w-12 h-12 hover:bg-gray-100 dark:hover:bg-neutral-950 dark:border dark:border-purple-600/50 text-gray-800 dark:text-white rounded-full shadow-lg flex items-center justify-center duration-300"
   [title]="'Change theme (current: ' + themeService.theme() + ')'"
 >
   @switch (themeService.theme()) {
     @case ('system') {
-      <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M2 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5v1h2a1 1 0 1 1 0 2H7a1 1 0 1 1 0-2h2v-1H4a2 2 0 0 1-2-2V4zm2 0v8h6V4H4z"/><path d="M10 4h6v8h-6V4z" class="opacity-40"/></svg>
+      <svg class="icon"><path d="M2 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-5v1h2a1 1 0 1 1 0 2H7a1 1 0 1 1 0-2h2v-1H4a2 2 0 0 1-2-2V4zm2 0v8h6V4H4z"/><path d="M10 4h6v8h-6V4z"/></svg>
     }
     @case ('light') {
-      <svg class="w-5 h-5 fill-current"  viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm4 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zm0 5v1a1 1 0 0 0 2-2h-1a1 1 0 0 0-1 1zm2-11a1 1 0 0 1 0 2h-1a1 1 0 1 1-1-1V4a1 1 0 0 1 2 0zm1 7a1 1 0 1 0 0-2h-1a1 1 0 1 0 0 2h1zm-7 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zM5 6a1 1 0 1 0 1-1V4a1 1 0 0 0-2 2h1zm1 9v1a1 1 0 0 1-2-2h1a1 1 0 0 1 1 1zm-2-4a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2h1z" clip-rule="evenodd"/></svg>
+      <svg class="icon"><path d="M10 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1zm4 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zm0 5v1a1 1 0 0 0 2-2h-1a1 1 0 0 0-1 1zm2-11a1 1 0 0 1 0 2h-1a1 1 0 1 1-1-1V4a1 1 0 0 1 2 0zm1 7a1 1 0 1 0 0-2h-1a1 1 0 1 0 0 2h1zm-7 4a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1zM5 6a1 1 0 1 0 1-1V4a1 1 0 0 0-2 2h1zm1 9v1a1 1 0 0 1-2-2h1a1 1 0 0 1 1 1zm-2-4a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2h1z"/></svg>
     }
     @case ('dark') {
-      <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M17 13A8 8 0 0 1 7 3a8 8 0 1 0 10 10z"/></svg>
+      <svg class="icon"><path d="M17 13A8 8 0 0 1 7 3a8 8 0 1 0 10 10z"/></svg>
     }
   }
 </button>

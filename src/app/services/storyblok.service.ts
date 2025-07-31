@@ -25,26 +25,5 @@ export class StoryblokService {
    * Instead of calling an API, it searches the array of all stories.
    * @param slug The full slug of the story to find (e.g., 'about' or 'projects/my-first-project')
    */
-  getStory(slug: string): Observable<Story | undefined> {
-    return this.allStories$.pipe(
-      map(stories => stories.find(story => story.full_slug === slug))
-    );
-  }
-
-  /**
-   * Gets ALL stories.
-   * This is useful for list pages, like a blog index or a project portfolio overview.
-   */
-  getStories(params?: { starts_with: string }): Observable<Story[]> {
-    return this.allStories$.pipe(
-      map(stories => {
-        if (params?.starts_with) {
-          // If a 'starts_with' filter is provided, filter the stories.
-          return stories.filter(story => story.full_slug.startsWith(params.starts_with));
-        }
-        // Otherwise, return all stories.
-        return stories;
-      })
-    );
-  }
+  getStory = (slug: string): Observable<Story | undefined> => this.allStories$.pipe(map(stories => stories.find(story => story.full_slug == slug)));
 }
