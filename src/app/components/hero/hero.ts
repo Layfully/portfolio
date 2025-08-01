@@ -47,21 +47,16 @@ export class Hero implements AfterViewInit, OnDestroy {
     });
 
     this.tl
-      .from(this.profileImage.nativeElement, {
-        scale: 0.5,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      })
-      .from(this.introText.nativeElement, {
-        y: -50,
-        opacity: 0,
+      .to(this.profileImage.nativeElement, { scale: 1, opacity:1, duration: 1, ease: 'power3.out'})
+      .to(this.introText.nativeElement, {
+        y: 0,
+        opacity: 1,
         duration: 0.8,
         ease: 'power2.out'
       }, '-=0.7')
-      .from(this.buttonGroup.nativeElement, {
-        y: -30,
-        opacity: 0,
+      .to(this.buttonGroup.nativeElement, {
+        y: 0,
+        opacity: 1,
         duration: 0.8,
         ease: 'power2.out'
       }, '-=0.6')
