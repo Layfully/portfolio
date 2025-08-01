@@ -58,15 +58,15 @@ export class About implements AfterViewInit, OnDestroy {
     });
 
     this.tl
-      .from(titleEl, {
-        opacity: 0,
-        y: 50,
+      .to(titleEl, {
+        opacity: 1,
+        y: 0,
         duration: 0.8,
         ease: 'power3.out'
       })
-      .from(contentEls, {
-        opacity: 0,
-        y: 40,
+      .to(contentEls, {
+        opacity: 1,
+        y: 0,
         duration: 0.8,
         ease: 'power3.out',
         stagger: 0.2
