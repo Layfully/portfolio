@@ -59,6 +59,10 @@
   --font-sans: "Inter", "Inter Fallback, sans-serif";
 }
 
+.prose p {
+  margin: 0;
+}
+
 .prose u {
   @apply decoration-2 decoration-violet-500/70 underline-offset-4;
 }
