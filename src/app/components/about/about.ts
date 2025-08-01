@@ -24,9 +24,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 export class About implements AfterViewInit, OnDestroy {
   @Input() blok: any;
 
-  @ViewChild('aboutWrapper', { read: ElementRef }) wrapper!: ElementRef<HTMLElement>;
   @ViewChild('aboutTitle') title!: ElementRef<HTMLHeadingElement>;
-  @ViewChildren('aboutContent') contentBlocks!: QueryList<ElementRef<HTMLDivElement>>;
+  @ViewChild('aboutContent') contentBlock!: ElementRef<HTMLDivElement>;
 
   private tl?: gsap.core.Timeline;
 
@@ -41,20 +40,15 @@ export class About implements AfterViewInit, OnDestroy {
   initAnimation(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!this.wrapper?.nativeElement || !this.title?.nativeElement || this.contentBlocks.length === 0) {
+    if (!this.title?.nativeElement || !this.contentBlock?.nativeElement) {
       return;
     }
 
-    const wrapperEl = this.wrapper.nativeElement;
     const titleEl = this.title.nativeElement;
-    const contentEls = this.contentBlocks.map(ref => ref.nativeElement);
+    const contentEl = this.contentBlock.nativeElement;
 
     this.tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: wrapperEl,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
-      }
+      delay: 0.3
     });
 
     this.tl
@@ -64,13 +58,12 @@ export class About implements AfterViewInit, OnDestroy {
         duration: 0.8,
         ease: 'power3.out'
       })
-      .to(contentEls, {
+      .to(contentEl, {
         opacity: 1,
         y: 0,
         duration: 0.8,
         ease: 'power3.out',
-        stagger: 0.2
-      }, '-=0.5');
+      }, '<');
   }
 
   ngOnDestroy(): void {
