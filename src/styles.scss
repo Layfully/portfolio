@@ -7,6 +7,15 @@
   line-gap-override: 6%;
 }
 
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local(Verdana);
+  size-adjust: 109%;
+  font-style: italic;
+  ascent-override: normal;
+  descent-override: normal;
+}
+
 /* inter-regular - latin */
 @font-face {
   font-display: swap;
@@ -51,7 +60,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", "Inter Fallback";
+  --font-sans: "Inter", "Inter Fallback, sans-serif";
 }
 
 .prose u {
