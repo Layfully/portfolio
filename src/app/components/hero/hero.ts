@@ -60,9 +60,9 @@ export class Hero implements AfterViewInit, OnDestroy {
         duration: 0.8,
         ease: 'power2.out'
       }, '-=0.6')
-      .from(this.wavingHand.nativeElement, {
-        scale: 0,
-        opacity: 0,
+      .to(this.wavingHand.nativeElement, {
+        scale: 1,
+        opacity: 1,
         duration: 0.8,
         ease: 'back.out(1.7)'
       }, '-=0.5')
