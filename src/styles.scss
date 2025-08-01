@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local(Verdana);
+  size-adjust: 94%;
+  ascent-override: normal;
+  descent-override: normal;
+  line-gap-override: 6%;
+}
+
 /* inter-regular - latin */
 @font-face {
   font-display: swap;
@@ -42,8 +51,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-mono: "JetBrains Mono", "monospace";
-  --font-sans: "Inter", "sans-serif";
+  --font-sans: "Inter", "Inter Fallback";
 }
 
 .prose u {
