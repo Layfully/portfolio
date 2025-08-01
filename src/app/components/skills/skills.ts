@@ -58,16 +58,16 @@ export class Skills implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.tl.from(titleElement, {
-      opacity: 0,
-      y: 30,
+    this.tl.to(titleElement, {
+      opacity: 1,
+      y: 0,
       duration: 0.6,
       ease: 'power3.out'
     });
 
-    this.tl.from(tagElements, {
-      opacity: 0,
-      y: 20,
+    this.tl.to(tagElements, {
+      opacity: 1,
+      y: 0,
       duration: 0.5,
       ease: 'power3.out',
       stagger: 0.08,

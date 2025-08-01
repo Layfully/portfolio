@@ -45,9 +45,9 @@ export class Projects implements AfterViewInit, OnDestroy {
       return;
     }
 
-    gsap.from(this.title.nativeElement, {
-      opacity: 0,
-      y: 30,
+    gsap.to(this.title.nativeElement, {
+      opacity: 1,
+      y: 0,
       duration: 0.8,
       ease: 'power3.out',
       scrollTrigger: {
@@ -60,10 +60,10 @@ export class Projects implements AfterViewInit, OnDestroy {
     this.projectCards.forEach(cardRef => {
       const cardEl = cardRef.nativeElement;
 
-      const tween = gsap.from(cardEl, {
-        opacity: 0,
-        scale: 0.9,
-        y: 50,
+      const tween = gsap.to(cardEl, {
+        opacity: 1,
+        scale: 1,
+        y: 0,
         ease: 'power1.inOut',
         scrollTrigger: {
           trigger: cardEl,
