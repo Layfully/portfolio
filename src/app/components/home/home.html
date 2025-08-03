@@ -17,7 +17,7 @@
     <div class="skeleton-hero"></div>
   }
 
-  @defer (on viewport; prefetch on idle) {
+  @defer (on viewport) {
     @if (blokMap['skills']) {
       <app-skills [blok]="blokMap['skills']"></app-skills>
     }
@@ -30,7 +30,7 @@
     @if (blokMap['footer']) {
       <app-footer [blok]="blokMap['footer']"></app-footer>
     }
-  } @placeholder (minimum 700ms) {
+  } @placeholder (minimum 1500ms) {
     <div class="skeleton-section"></div>
   }
 </main>
