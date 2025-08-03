@@ -1,9 +1,36 @@
 <main>
-  @if (story.content) {
-    @for (blok of story.content.body; track blok._uid) {
-      <app-blok [blok]="blok"></app-blok>
+  @if (blokMap['header']) {
+    <app-header [blok]="blokMap['header']"></app-header>
+  }
+
+  @defer (on idle; prefetch on immediate) {
+    @if (blokMap['hero']) {
+      <app-hero [blok]="blokMap['hero']"></app-hero>
     }
-  } @else {
-    <p>Loading content...</p>
+    @if (blokMap['about']) {
+      <app-about [blok]="blokMap['about']"></app-about>
+    }
+    @if (blokMap['projects']) {
+      <app-projects [blok]="blokMap['projects']"></app-projects>
+    }
+  } @placeholder (minimum 100ms) {
+    <div class="skeleton-hero"></div>
+  }
+
+  @defer (on viewport; prefetch on idle) {
+    @if (blokMap['skills']) {
+      <app-skills [blok]="blokMap['skills']"></app-skills>
+    }
+    @if (blokMap['experience']) {
+      <app-experience [blok]="blokMap['experience']"></app-experience>
+    }
+    @if (blokMap['contact']) {
+      <app-contact [blok]="blokMap['contact']"></app-contact>
+    }
+    @if (blokMap['footer']) {
+      <app-footer [blok]="blokMap['footer']"></app-footer>
+    }
+  } @placeholder (minimum 700ms) {
+    <div class="skeleton-section"></div>
   }
 </main>
