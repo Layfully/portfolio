@@ -31,7 +31,15 @@
   <div #buttonGroup class="mt-10 flex gap-4 opacity-0 translate-y-[30px]">
     <a href="#contact" class="btn-primary">
       {{ blok.contact_text}}
-      <span aria-hidden="true">→</span>
+      <svg
+        aria-hidden="true"
+        class="size-4.5"
+        fill="none"
+        stroke-width="2"
+        stroke="currentColor"
+        viewBox="0 -1.5 16 16">
+        <path d="M10 4L14 8L10 12M14 8H2"/>
+      </svg>
     </a>
     <a [href]="blok.cv.filename" download class="btn-secondary">
       {{ blok.download_text}}
