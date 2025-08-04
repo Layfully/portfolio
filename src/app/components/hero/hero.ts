@@ -47,23 +47,23 @@ export class Hero implements AfterViewInit, OnDestroy {
     });
 
     this.tl
-      .to(this.profileImage.nativeElement, { scale: 1, opacity:1, duration: 1, ease: 'power3.out'})
+      .to(this.profileImage.nativeElement, { scale: 1, opacity:1, duration: .3, ease: 'power3.out'})
       .to(this.introText.nativeElement, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out'
+        duration: 0.4,
+        ease: 'back.inOut'
       }, '-=0.7')
       .to(this.buttonGroup.nativeElement, {
         y: 0,
         opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out'
+        duration: 0.4,
+        ease: 'back.inOut'
       }, '-=0.6')
       .to(this.wavingHand.nativeElement, {
         scale: 1,
         opacity: 1,
-        duration: 0.8,
+        duration: 0.4,
         ease: 'back.out(1.7)'
       }, '-=0.5')
       .to(this.wavingHand.nativeElement, {
@@ -76,8 +76,8 @@ export class Hero implements AfterViewInit, OnDestroy {
         },
         transformOrigin: '75% 75%',
         repeat: -1,
-        repeatDelay: 1.5,
-        duration: 0.7,
+        repeatDelay: 1,
+        duration: 0.4,
         ease: 'power1.inOut'
       });
   }

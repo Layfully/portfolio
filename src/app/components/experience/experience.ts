@@ -56,8 +56,8 @@ export class Experience implements AfterViewInit, OnDestroy {
     });
 
     mainTl
-      .from(this.title.nativeElement, { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' })
-      .from(this.timelineBar.nativeElement, { scaleY: 0, duration: 1, ease: 'power3.inOut' }, '-=0.5');
+      .from(this.title.nativeElement, { opacity: 0, y: 30, duration: 0.4, ease: 'power4.out' })
+      .from(this.timelineBar.nativeElement, { scaleY: 0, duration: 1, ease: 'power4.inOut' }, '-=0.5');
 
     this.timelines.push(mainTl);
 
@@ -72,16 +72,16 @@ export class Experience implements AfterViewInit, OnDestroy {
       const itemTl = gsap.timeline({
         scrollTrigger: {
           trigger: itemEl,
-          start: 'top 85%',
+          start: 'top 75%',
           toggleActions: 'play none none none'
         }
       });
 
       itemTl.fromTo(marker,
         { scale: 0, opacity: 0 },
-        { scale: 1.5, opacity: 1, duration: 0.4, ease: 'power2.out' }
+        { scale: 1.5, opacity: 1, duration: 0.3, ease: 'power2.out' }
       ).to(marker,
-        { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.75)' }
+        { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.75)' }
       );
 
       const isOdd = index % 2 === 0;
@@ -89,8 +89,8 @@ export class Experience implements AfterViewInit, OnDestroy {
       const timeX = isOdd ? 100 : -100;
 
       itemTl
-        .from(card, { xPercent: cardX, opacity: 0, duration: 0.7, ease: 'power3.out' }, '<')
-        .from(time, { xPercent: timeX, opacity: 0, duration: 0.7, ease: 'power3.out' }, '<');
+        .from(card, { xPercent: cardX, opacity: 0, duration: 0.45, ease: 'power4.inOut' }, '<')
+        .from(time, { xPercent: timeX, opacity: 0, duration: 0.45, ease: 'power4.inOut' }, '<');
 
       this.timelines.push(itemTl);
     });

@@ -4,9 +4,7 @@ import {
   AfterViewInit,
   OnDestroy,
   ViewChild,
-  ViewChildren,
   ElementRef,
-  QueryList,
   PLATFORM_ID,
   Inject
 } from '@angular/core';
@@ -48,21 +46,21 @@ export class About implements AfterViewInit, OnDestroy {
     const contentEl = this.contentBlock.nativeElement;
 
     this.tl = gsap.timeline({
-      delay: 0.3
+      delay: 0.2
     });
 
     this.tl
       .to(titleEl, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: 'power3.out'
+        duration: 0.4,
+        ease: 'back.out'
       })
       .to(contentEl, {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
+        duration: 0.4,
+        ease: 'back.out',
       }, '<');
   }
 

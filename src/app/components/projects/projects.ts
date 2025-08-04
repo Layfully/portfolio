@@ -48,8 +48,8 @@ export class Projects implements AfterViewInit, OnDestroy {
     gsap.to(this.title.nativeElement, {
       opacity: 1,
       y: 0,
-      duration: 0.8,
-      ease: 'power3.out',
+      duration: 0.4,
+      ease: 'power4.out',
       scrollTrigger: {
         trigger: this.wrapper.nativeElement,
         start: 'top 80%',
@@ -64,7 +64,7 @@ export class Projects implements AfterViewInit, OnDestroy {
         opacity: 1,
         scale: 1,
         y: 0,
-        ease: 'power1.inOut',
+        ease: 'power4 .inOut',
         scrollTrigger: {
           trigger: cardEl,
           start: 'top 90%',

@@ -117,12 +117,12 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
     this.initialRevealAnim = gsap.from(elementsToAnimate, {
       opacity: 0,
       y: 15,
-      duration: 1.2,
+      duration: 1,
       ease: 'power2.out',
       stagger: 0.05,
       scrollTrigger: {
         trigger: this.contactWrapper.nativeElement,
-        start: 'top 80%',
+        start: 'top 75%',
         toggleActions: 'play none none none'
       }
     });
