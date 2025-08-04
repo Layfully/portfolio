@@ -1,5 +1,6 @@
-import { Component, Input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { gsap } from 'gsap';
 
 @Component({
   selector: 'app-header',
@@ -8,11 +9,14 @@ import { isPlatformBrowser } from '@angular/common';
 export class Header implements AfterViewInit, OnDestroy {
   @Input() blok: any;
 
+  @ViewChild('headerNav') headerNav!: ElementRef<HTMLElement>;
+
   activeSection: string = 'Home';
 
   private intersectionObserver?: IntersectionObserver;
   private mutationObserver?: MutationObserver;
   private lastScrollY: number = 0;
+  private animation?: gsap.core.Tween;
 
   protected readonly sections = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Contact'];
 
@@ -27,6 +31,7 @@ export class Header implements AfterViewInit, OnDestroy {
       this.lastScrollY = window.scrollY;
 
       Promise.resolve().then(() => {
+        this.initAnimation();
         this.setupIntersectionObserver();
         this.setupMutationObserver();
       });
@@ -36,6 +41,19 @@ export class Header implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.intersectionObserver?.disconnect();
     this.mutationObserver?.disconnect();
+    this.animation?.kill();
+  }
+
+  private initAnimation(): void {
+    if (!this.headerNav?.nativeElement) return;
+
+    this.animation = gsap.from(this.headerNav.nativeElement, {
+      y: -100,
+      opacity: 0,
+      duration: 0.4,
+      ease: 'power4.out',
+      delay: 0.1,
+    });
   }
 
   private setupIntersectionObserver(): void {
