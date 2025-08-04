@@ -1,50 +1,88 @@
-import { Component, Input, OnInit, OnDestroy, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.html'
+  templateUrl: './header.html',
 })
-export class Header implements OnInit, OnDestroy {
+export class Header implements AfterViewInit, OnDestroy {
   @Input() blok: any;
 
   activeSection: string = 'Home';
-  private observer?: IntersectionObserver;
+
+  private intersectionObserver?: IntersectionObserver;
+  private mutationObserver?: MutationObserver;
+  private lastScrollY: number = 0;
+
   protected readonly sections = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Contact'];
+
   constructor(
     private elementRef: ElementRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      Promise.resolve().then(() => this.setupObserver());
+      // Initialize scroll position
+      this.lastScrollY = window.scrollY;
+
+      Promise.resolve().then(() => {
+        this.setupIntersectionObserver();
+        this.setupMutationObserver();
+      });
     }
   }
 
   ngOnDestroy() {
-    this.observer?.disconnect();
+    this.intersectionObserver?.disconnect();
+    this.mutationObserver?.disconnect();
   }
 
-  private setupObserver(): void {
+  private setupIntersectionObserver(): void {
     const options = {
       rootMargin: '0px 0px 0px 0px',
-      threshold: 0.75
+      threshold: 0.7
     };
 
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.activeSection = entry.target.id;
-          this.updateHighlight();
-        }
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      const currentY = window.scrollY;
+      const scrollingDown = currentY >= this.lastScrollY;
+      this.lastScrollY = currentY;
+
+      const visible = entries.filter(e => e.isIntersecting);
+      if (!visible.length) return;
+
+      const sorted = visible.sort((a, b) => {
+        const ay = a.boundingClientRect.y;
+        const by = b.boundingClientRect.y;
+        return !scrollingDown ? ay - by : by - ay;
+      });
+
+      const target = sorted[0].target as HTMLElement;
+      window.requestAnimationFrame(() => {
+        this.activeSection = target.id;
+        this.updateHighlight();
       });
     }, options);
 
+    this.observeAllSections();
+  }
+
+  private setupMutationObserver(): void {
+    const config = { childList: true, subtree: true };
+
+    this.mutationObserver = new MutationObserver(() => {
+      this.observeAllSections();
+    });
+
+    this.mutationObserver.observe(document.body, config);
+  }
+
+  private observeAllSections(): void {
     this.sections.forEach(sectionId => {
       const element = document.getElementById(sectionId);
       if (element) {
-        this.observer!.observe(element);
+        this.intersectionObserver!.observe(element);
       }
     });
   }
