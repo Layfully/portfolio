@@ -1,6 +1,6 @@
 {
   "name": "portfolio",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +11,7 @@
   },
   "private": true,
   "engines": {
-    "node": "^20.19.0"
+    "node": "^24.0.0"
   },
   "dependencies": {
     "@angular/common": "^20.1.3",
