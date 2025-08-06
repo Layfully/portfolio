@@ -82,6 +82,13 @@ html {
   background-color: #a78bfa;
 }
 
+::selection {
+  @apply bg-violet-500 text-white;
+}
+::-moz-selection {
+  @apply bg-violet-500 text-white;
+}
+
 .prose p {
   margin: 0;
 }

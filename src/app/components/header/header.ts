@@ -27,7 +27,6 @@ export class Header implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
-      // Initialize scroll position
       this.lastScrollY = window.scrollY;
 
       Promise.resolve().then(() => {
@@ -47,9 +46,9 @@ export class Header implements AfterViewInit, OnDestroy {
   private initAnimation(): void {
     if (!this.headerNav?.nativeElement) return;
 
-    this.animation = gsap.from(this.headerNav.nativeElement, {
-      y: -100,
-      opacity: 0,
+    this.animation = gsap.to(this.headerNav.nativeElement, {
+      y: 0,
+      opacity: 1,
       duration: 0.4,
       ease: 'power4.out',
       delay: 0.1,
