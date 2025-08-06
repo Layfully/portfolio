@@ -1,18 +1,14 @@
-// scripts/fetch-storyblok-data.mjs
 import { storyblokInit, apiPlugin } from '@storyblok/js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// --- Helper to get the correct directory path in an ES Module ---
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// These paths remain the same
 const dataDir = path.join(__dirname, '../src/assets/data');
 const routesFilePath = path.join(__dirname, '../routes.txt');
 
-// --- SDK Initialization (using the proper import) ---
 const { storyblokApi } = storyblokInit({
   accessToken: process.env.STORYBLOK_API_TOKEN,
   use: [apiPlugin],
