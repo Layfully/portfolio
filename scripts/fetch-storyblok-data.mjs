@@ -9,8 +9,11 @@ const __dirname = path.dirname(__filename);
 const dataDir = path.join(__dirname, '../src/assets/data');
 const routesFilePath = path.join(__dirname, '../routes.txt');
 
+const languages = ['en', 'pl'];
+const defaultLang = 'en';
+
 const { storyblokApi } = storyblokInit({
-  accessToken: process.env.STORYBLOK_API_TOKEN,
+  accessToken: 'S5UlY9WelUkYqhJrnGEQawtt',
   use: [apiPlugin],
 });
 
@@ -21,23 +24,32 @@ async function fetchAllData() {
     fs.mkdirSync(dataDir, { recursive: true });
   }
 
+  const allRoutes = [];
+
   try {
-    const { data } = await storyblokApi.get('cdn/stories', {
-      version: 'published',
-      starts_with: 'portfolio',
-      per_page: 100,
+    for (const lang of languages) {
+      console.log(`\nFetching data for language: [${lang.toUpperCase()}]`);
+      const { data } = await storyblokApi.get('cdn/stories', {
+        version: 'published',
+        starts_with: 'portfolio',
+        per_page: 100,
+        language: lang,
+      });
+
+      const stories = data.stories;
+      const langDataPath = path.join(dataDir, `stories.${lang}.json`);
+      fs.writeFileSync(langDataPath, JSON.stringify(stories, null, 2));
+      console.log(`✅  Successfully saved ${stories.length} stories to ${langDataPath}`);
+    }
+
+    allRoutes.push('/');
+
+    languages.filter(l => l !== defaultLang).forEach(lang => {
+        allRoutes.push(`/${lang}`);
     });
 
-    const stories = data.stories;
-
-    const allDataPath = path.join(dataDir, 'stories.json');
-    fs.writeFileSync(allDataPath, JSON.stringify(stories, null, 2));
-    console.log(`✅  Successfully saved ${stories.length} stories to ${allDataPath}`);
-
-    const allRoutes = '/';
-
-    fs.writeFileSync(routesFilePath, allRoutes);
-    console.log(`✅  Successfully generated routes file with the single route: /`);
+    fs.writeFileSync(routesFilePath, allRoutes.join('\n'));
+    console.log(`✅  Successfully generated routes file with routes: ${allRoutes.join(', ')}`);
 
   } catch (error) {
     console.error('❌ Error fetching data from Storyblok:', error);

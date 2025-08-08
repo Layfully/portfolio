@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StoryblokService } from '../../services/storyblok.service';
-import { Subscription } from 'rxjs';
+import { SeoService } from '../../services/seo.service';
+import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { About } from '../about/about';
 import { Hero } from '../hero/hero';
 import { Header } from '../header/header';
@@ -9,6 +10,9 @@ import { Experience } from '../experience/experience';
 import { Contact } from '../contact/contact';
 import { Skills } from '../skills/skills';
 import { Projects } from '../projects/projects';
+import { ActivatedRoute } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
+import { LanguageSwitcher } from "../language-switcher/language-switcher";
 
 @Component({
   selector: 'app-home',
@@ -20,34 +24,39 @@ import { Projects } from '../projects/projects';
     Experience,
     Contact,
     Skills,
-    Projects],
+    Projects,
+    AsyncPipe,
+    LanguageSwitcher
+],
   templateUrl: './home.html'
 })
-export class Home implements OnInit, OnDestroy {
-  story: any = {};
-  blokMap: Record<string, any> = {};
-  storySubscription: Subscription | undefined;
+export class Home implements OnInit {
 
-  constructor(private storyblokService: StoryblokService) {}
+  blokMap$: Observable<Record<string, any>> = of({});
 
-  ngOnInit() {
-    this.storySubscription = this.storyblokService
-      .getStory('portfolio')
-      .subscribe(data => {
-        this.story = data;
-        this.buildBlokMap();
-      });  }
+  constructor(private storyblokService: StoryblokService, private seoService: SeoService, private route: ActivatedRoute) {}
 
-  ngOnDestroy(): void {
-    this.storySubscription?.unsubscribe();
-  }
+  ngOnInit(): void {
+    this.blokMap$ = this.route.data.pipe(
+      map(data => data['lang'] as string || 'en'),
+      switchMap(lang => this.storyblokService.getStory('portfolio', lang).pipe(
+        map(story => {
+          const contentBody = story?.['content']?.body;
+          if (!contentBody) {
+            return {};
+          }
+          const seoDataBlock = contentBody.find((blok: any) => blok.component === 'seo_data');
+          if (seoDataBlock) {
+            this.seoService.updateMetaTags(seoDataBlock, lang);
+          }
 
-  private buildBlokMap(): void {
-    this.blokMap = {};
-    if (this.story?.content?.body) {
-      for (const b of this.story.content.body) {
-        this.blokMap[b.component] = b;
-      }
-    }
+          const blokMap: Record<string, any> = {};
+          for (const blok of contentBody) {
+            blokMap[blok.component] = blok;
+          }
+          return blokMap;
+        })
+      ))
+    );
   }
 }

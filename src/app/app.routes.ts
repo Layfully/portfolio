@@ -2,5 +2,14 @@ import { Routes } from '@angular/router';
 import { Home } from './components/home/home';
 
 export const routes: Routes = [
-  { path: '', component: Home, title: 'Adrian Gaborek | Portfolio'},
+  {
+    path: 'pl',
+    component: Home,
+    data: { lang: 'pl' }
+  },
+  {
+    path: '',
+    component: Home,
+    data: { lang: 'en' }
+  },
 ];
