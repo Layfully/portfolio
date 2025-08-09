@@ -1,31 +1,38 @@
 <main class="relative overflow-hidden">
-  <div class="absolute z-10 -top-20 -left-48 h-[25rem] w-[55rem] rounded-full bg-sky-600/10 blur-3xl dark:bg-sky-500/15"
-    aria-hidden="true"></div>
+<div class="absolute z-10
+            -top-12 -left-24 h-[15rem] w-[30rem]
+            md:-top-20 md:-left-48 md:h-[25rem] md:w-[55rem]
+            rounded-full bg-sky-600/10 blur-3xl dark:bg-sky-500/15" aria-hidden="true"></div>
 
-  <div
-    class="absolute -z-10 top-[50rem] -right-56 h-[45rem] w-[50rem] rounded-full bg-fuchsia-600/10 blur-3xl dark:bg-fuchsia-500/10"
-    aria-hidden="true"></div>
+<div class="absolute -z-10
+            top-[48rem] -right-28 h-[25rem] w-[30rem]
+            md:top-[50rem] md:-right-56 md:h-[45rem] md:w-[50rem]
+            rounded-full bg-fuchsia-600/10 blur-3xl dark:bg-fuchsia-500/10" aria-hidden="true"></div>
 
-  <div
-    class="absolute -z-10 top-[95rem] -left-64 h-[30rem] w-[50rem] rounded-full bg-rose-600/10 blur-3xl dark:bg-rose-500/10"
-    aria-hidden="true"></div>
+<div class="absolute -z-10
+            top-[93rem] -left-32 h-[20rem] w-[30rem]
+            md:top-[95rem] md:-left-64 md:h-[30rem] md:w-[50rem]
+            rounded-full bg-rose-600/10 blur-3xl dark:bg-rose-500/10" aria-hidden="true"></div>
 
-  <div
-    class="absolute -z-10 top-[160rem] -right-40 h-[40rem] w-[60rem] rounded-full bg-violet-600/10 blur-3xl dark:bg-violet-500/15"
-    aria-hidden="true"></div>
+<div class="absolute -z-10
+            top-[158rem] -right-20 h-[25rem] w-[35rem]
+            md:top-[160rem] md:-right-40 md:h-[40rem] md:w-[60rem]
+            rounded-full bg-violet-600/10 blur-3xl dark:bg-violet-500/15" aria-hidden="true"></div>
 
-  <div
-    class="absolute -z-10 top-[220rem] -left-32 h-[30rem] w-[30rem] rounded-full bg-teal-600/10 blur-3xl dark:bg-teal-500/10"
-    aria-hidden="true"></div>
+<div class="absolute -z-10
+            top-[218rem] -left-16 h-[20rem] w-[20rem]
+            md:top-[220rem] md:-left-32 md:h-[30rem] md:w-[30rem]
+            rounded-full bg-teal-600/10 blur-3xl dark:bg-teal-500/10" aria-hidden="true"></div>
 
-  <div
-    class="absolute -z-10 top-[280rem] -right-52 h-[35rem] w-[45rem] rounded-full bg-sky-600/10 blur-3xl dark:bg-sky-500/10"
-    aria-hidden="true"></div>
+<div class="absolute -z-10
+            top-[278rem] -right-26 h-[20rem] w-[30rem]
+            md:top-[280rem] md:-right-52 md:h-[35rem] md:w-[45rem]
+            rounded-full bg-sky-600/10 blur-3xl dark:bg-sky-500/10" aria-hidden="true"></div>
 
 @if (blokMap$ | async; as blokMap) {
   @if (blokMap['header']) {
     <app-header [blok]="blokMap['header']"></app-header>
-    <div class="fixed top-10.5 right-9 z-50">
+    <div class="fixed top-6 right-6 lg:top-10.5 lg:right-9 z-50">
       <app-language-switcher></app-language-switcher>
     </div>
   }
