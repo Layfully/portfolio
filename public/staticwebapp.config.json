@@ -45,7 +45,7 @@
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "X-XSS-Protection": "1; mode=block",
-    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://a.storyblok.com; font-src 'self' data:; connect-src 'self' https://api.storyblok.com;"
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://a.storyblok.com; font-src 'self' data:; connect-src 'self' https://api.storyblok.com https://challenges.cloudflare.com;"
   },
 
   "mimeTypes": {
