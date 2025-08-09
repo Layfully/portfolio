@@ -35,7 +35,7 @@
     {
       "name": "storyblok-assets",
       "urls": [
-        "https://a.storyblok.com/"
+        "https://a.storyblok.com/**"
       ],
       "cacheConfig": {
         "maxSize": 100,
