@@ -32,6 +32,19 @@
       }
     }
   ],
+  "dataGroups": [
+    {
+      "name": "storyblok-assets",
+      "urls": [
+        "https://a.storyblok.com/"
+      ],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "7d",
+        "strategy": "freshness"
+      }
+    }
+  ],
   "navigationUrls": [
     "!/api/**",
     "/**"
