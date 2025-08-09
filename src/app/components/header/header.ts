@@ -17,6 +17,7 @@ export class Header implements AfterViewInit, OnDestroy {
   private mutationObserver?: MutationObserver;
   private lastScrollY: number = 0;
   private animation?: gsap.core.Tween;
+  private isNavigating = false;
 
   protected readonly sections = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Contact'];
 
@@ -62,6 +63,11 @@ export class Header implements AfterViewInit, OnDestroy {
     };
 
     this.intersectionObserver = new IntersectionObserver((entries) => {
+      if (this.isNavigating)
+      {
+        return;
+      }
+
       const currentY = window.scrollY;
       const scrollingDown = currentY >= this.lastScrollY;
       this.lastScrollY = currentY;
@@ -104,22 +110,30 @@ export class Header implements AfterViewInit, OnDestroy {
     });
   }
 
-  private updateHighlight(): void {
-    const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection}"]`);
-    const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight');
-    const nav = this.elementRef.nativeElement.querySelector('ul');
+private updateHighlight(): void {
+  const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection}"]`);
+  const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight') as HTMLElement; // Cast to HTMLElement
+  const nav = this.elementRef.nativeElement.querySelector('ul');
 
-    if (activeLink && highlight && nav) {
-      const navRect = nav.getBoundingClientRect();
-      const linkRect = activeLink.getBoundingClientRect();
+  if (activeLink && highlight && nav) {
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
 
-      highlight.style.width = `${linkRect.width + 35}px`;
-      highlight.style.transform = `translateX(${linkRect.left - 17.5 - navRect.left}px)`;
-    }
+    const xOffset = linkRect.left - navRect.left - 17.5;
+    const yOffset = linkRect.top - navRect.top - 14;
+
+    highlight.style.width = `${linkRect.width + 35}px`;
+    highlight.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
   }
+}
 
   onLinkClick(sectionId: string): void {
     this.activeSection = sectionId;
     this.updateHighlight();
+    this.isNavigating = true;
+
+    setTimeout(() => {
+      this.isNavigating = false;
+    }, 1000);
   }
 }
