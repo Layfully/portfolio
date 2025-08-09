@@ -1,7 +1,6 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
-  "navigationRequestStrategy": "freshness",
   "assetGroups": [
     {
       "name": "app",
@@ -42,7 +41,7 @@
       "cacheConfig": {
         "maxSize": 100,
         "maxAge": "7d",
-        "strategy": "freshness"
+        "strategy": "performance"
       }
     }
   ],

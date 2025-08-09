@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch()),
     provideClientHydration(withEventReplay()),
-    provideServiceWorker('service-worker.js', {
+    provideServiceWorker('service-worker-wrapper.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerImmediately'
     }),
