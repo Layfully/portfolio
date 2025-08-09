@@ -1,2 +1,0 @@
-# This file is intentionally left blank.
-# Cloudflare will append its managed rules.
