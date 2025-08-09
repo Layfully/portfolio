@@ -18,6 +18,7 @@ export class Header implements AfterViewInit, OnDestroy {
   private lastScrollY: number = 0;
   private animation?: gsap.core.Tween;
   private isNavigating = false;
+  private scrollEndTimer: any;
 
   protected readonly sections = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Contact'];
 
@@ -34,6 +35,7 @@ export class Header implements AfterViewInit, OnDestroy {
         this.initAnimation();
         this.setupIntersectionObserver();
         this.setupMutationObserver();
+        window.addEventListener('scroll', this.onWindowScroll);
       });
     }
   }
@@ -41,6 +43,9 @@ export class Header implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.intersectionObserver?.disconnect();
     this.mutationObserver?.disconnect();
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('scroll', this.onWindowScroll);
+    }
     this.animation?.kill();
   }
 
@@ -55,6 +60,14 @@ export class Header implements AfterViewInit, OnDestroy {
       delay: 0.1,
     });
   }
+
+  private onWindowScroll = (): void => {
+    clearTimeout(this.scrollEndTimer);
+
+    this.scrollEndTimer = setTimeout(() => {
+      this.isNavigating = false;
+    }, 150)
+  };
 
   private setupIntersectionObserver(): void {
     const options = {
@@ -83,8 +96,10 @@ export class Header implements AfterViewInit, OnDestroy {
 
       const target = sorted[0].target as HTMLElement;
       window.requestAnimationFrame(() => {
-        this.activeSection = target.id;
-        this.updateHighlight();
+        if (this.activeSection !== target.id) {
+          this.activeSection = target.id;
+          this.updateHighlight();
+        }
       });
     }, options);
 
@@ -112,7 +127,7 @@ export class Header implements AfterViewInit, OnDestroy {
 
 private updateHighlight(): void {
   const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection}"]`);
-  const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight') as HTMLElement; // Cast to HTMLElement
+  const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight') as HTMLElement;
   const nav = this.elementRef.nativeElement.querySelector('ul');
 
   if (activeLink && highlight && nav) {
@@ -128,12 +143,8 @@ private updateHighlight(): void {
 }
 
   onLinkClick(sectionId: string): void {
+    this.isNavigating = true;
     this.activeSection = sectionId;
     this.updateHighlight();
-    this.isNavigating = true;
-
-    setTimeout(() => {
-      this.isNavigating = false;
-    }, 1000);
   }
 }
