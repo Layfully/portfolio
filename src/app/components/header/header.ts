@@ -135,7 +135,7 @@ private updateHighlight(): void {
     const linkRect = activeLink.getBoundingClientRect();
 
     const xOffset = linkRect.left - navRect.left - 17.5;
-    const yOffset = linkRect.top - navRect.top - 14;
+    const yOffset = linkRect.top - navRect.top - 15;
 
     highlight.style.width = `${linkRect.width + 35}px`;
     highlight.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
