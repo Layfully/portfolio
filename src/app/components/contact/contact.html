@@ -1,6 +1,7 @@
-<app-section-wrapper id="Contact" class="max-w-xl" #contactWrapper>
+<app-section-wrapper id="Contact" class="max-w-xl lg:max-w-2xl px-4 sm:px-6 lg:px-8" #contactWrapper>
   <h1 #contactTitle class="title">{{ blok.title }}</h1>
-  <div #contactPrompt class="prose prose-lg dark:prose-invert mt-16" [innerHTML]="blok.prompt | richText"></div>
+  <div #contactPrompt class="prose prose-sm sm:prose-base md:prose-lg dark:prose-invert mt-4 sm:mt-6 md:mt-8"
+    [innerHTML]="blok.prompt | richText"></div>
 
   @if (submissionStatus === 'success') {
     <div #successMessageContainer class="toast bg-green-50  dark:bg-green-900/20 ring-green-600/20">
@@ -17,7 +18,8 @@
     </p>
   }
 
-  <form #formElement class="mt-6 w-full flex flex-col gap-y-6" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <form #formElement class="mt-6 sm:mt-8 w-full flex flex-col gap-y-3 sm:gap-y-4 md:gap-y-5" [formGroup]="contactForm"
+    (ngSubmit)="onSubmit()">
     <input
       type="email"
       id="email"

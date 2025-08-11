@@ -113,13 +113,13 @@ html {
   }
 
   .title {
-    @apply text-5xl font-bold text-gray-900 dark:text-white;
+    @apply text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 dark:text-white;
   }
   .icon {
     @apply w-5 h-5 fill-current;
   }
   .btn {
-    @apply inline-flex items-center transition-all duration-300 hover:scale-104 justify-center gap-x-2 rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+    @apply inline-flex items-center transition-all duration-300 hover:scale-104 justify-center gap-x-2 rounded-md md:rounded-lg lg:rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
   }
 
   .btn-primary {
@@ -138,7 +138,7 @@ html {
 
   .btn-submit {
     @extend .btn-primary;
-    @apply px-8 cursor-pointer text-base;
+    @apply px-6 sm:px-8 cursor-pointer text-base;
 
     @apply disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-none;
 
