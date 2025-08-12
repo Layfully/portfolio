@@ -1,8 +1,8 @@
-<app-section-wrapper id="Skills" #skillsWrapper class="max-w-3xl">
+<app-section-wrapper id="Skills" #skillsWrapper class="max-w-3xl px-4 sm:px-6 lg:px-8">
   <h2 class="title opacity-0 translate-y-[-30px]">
     {{ blok.title }}
   </h2>
-  <ul class="mt-16 flex flex-wrap justify-center gap-4">
+  <ul class="mt-8 flex flex-wrap justify-center gap-2 sm:mt-12 sm:gap-4">
     @for (skill of blok.skills; track skill._uid) {
       <li class="tag-pill opacity-0 translate-y-[-40px]" #skillTag>
         {{ skill.text }}
