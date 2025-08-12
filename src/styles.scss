@@ -108,6 +108,7 @@ html {
   .header-link.active {
     @apply text-slate-900 dark:text-white;
   }
+
   .toast {
     @apply w-full mt-6 rounded-md p-4 ring-1 ring-inset ;
   }
@@ -118,8 +119,9 @@ html {
   .icon {
     @apply w-5 h-5 fill-current;
   }
+
   .btn {
-    @apply inline-flex items-center transition-all duration-300 hover:scale-104 justify-center gap-x-2 rounded-md md:rounded-lg lg:rounded-full px-6 py-3 text-sm font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
+      @apply inline-flex items-center transition-all duration-300 hover:scale-104 justify-center gap-x-2 rounded-md md:rounded-lg lg:rounded-full text-xs font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 px-3 py-1.5 sm:px-4 sm:py-2 sm:text-sm md:px-6 md:py-3;
   }
 
   .btn-primary {
@@ -133,12 +135,12 @@ html {
   }
 
   .btn-icon {
-    @apply inline-flex hover:scale-110 duration-300 transition-all h-12 w-12 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-700;
+      @apply inline-flex hover:scale-110 duration-300 transition-all h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-800 shadow-sm transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-700;
   }
 
   .btn-submit {
     @extend .btn-primary;
-    @apply px-6 sm:px-8 cursor-pointer text-base;
+    @apply px-6 sm:px-8 cursor-pointer text-base opacity-100!;
 
     @apply disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-none;
 
