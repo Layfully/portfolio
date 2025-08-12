@@ -17,7 +17,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 @Component({
   selector: 'app-about',
   imports: [RichTextPipe, SectionWrapper],
-  templateUrl: './about.html'
+  templateUrl: './about.html',
+  styleUrl: './about.scss'
 })
 export class About implements AfterViewInit, OnDestroy {
   @Input() blok: any;

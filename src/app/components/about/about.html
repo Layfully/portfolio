@@ -1,5 +1,5 @@
-<app-section-wrapper id="About" class="max-w-3xl " #aboutWrapper>
+<app-section-wrapper id="About" class="max-w-3xl px-4" #aboutWrapper>
   <h2 #aboutTitle class="title opacity-0 translate-y-[-50px]">{{ blok.title }}</h2>
-  <div #aboutContent class="prose prose-lg dark:prose-invert mt-6 opacity-0 translate-y-[-100px]" [innerHTML]="blok.biography | richText">
+  <div #aboutContent id="aboutContent" class="prose sm:prose-lg dark:prose-invert mt-4 sm:mt-6 opacity-0 translate-y-[-100px]" [innerHTML]="blok.biography | richText">
   </div>
 </app-section-wrapper>
