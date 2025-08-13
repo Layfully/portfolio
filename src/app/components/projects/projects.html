@@ -1,57 +1,92 @@
-<app-section-wrapper id="Projects" #projectsWrapper class="max-w-2xl">
+<app-section-wrapper id="Projects" #projectsWrapper class="max-w-2xl px-4">
   <h2 #projectsTitle class="title opacity-0 translate-y-[100px]">
     {{ blok.title }}
   </h2>
-  <div class="mt-16 space-y-14">
+  <div class="mt-16 space-y-14 md:space-y-20">
     @for (project of blok.projects; track project._uid) {
-      <article #projectCard class="opacity-0 scale-90 translate-y-[-50px] transition-border h-[22rem] group grid grid-cols-2 p-6 overflow-hidden rounded-lg dark:border-1 shadow-lg backdrop-blur-sm dark:border-slate-900 dark:hover:border-slate-700">
-        <div class="flex flex-col justify-between text-left group-[:nth-child(even)]:md:order-last">
-          <div class="rounded-xl bg-gray-50 p-6 dark:bg-slate-800/10">
-            <div class="flex items-center justify-between">
-              <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">
-                {{ project.title }}
-              </h3>
-              @if (project.github_link?.url) {
-                <a [href]="project.github_link.url"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="text-slate-500 transition-colors transition-transform hover:scale-125 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-100"
-                   aria-label="View project on GitHub">
-                  <svg fill="currentColor" class="size-5 mt-0.5" viewBox="0 0 16 16"><path d="M8 0a8 8 0 0 0-2.5 15.6c.4 0 .5-.2.5-.4v-1.5c-2 .4-2.5-.5-2.7-1 0-.1-.5-.9-.8-1-.3-.2-.7-.6 0-.6.6 0 1 .6 1.2.8.7 1.2 1.9 1 2.4.7 0-.5.2-.9.5-1-1.8-.3-3.7-1-3.7-4 0-.9.3-1.6.8-2.2 0-.2-.3-1 .1-2 0 0 .7-.3 2.2.7a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 2 .1 2.1.5.6.8 1.3.8 2.2 0 3-1.9 3.7-3.6 4 .3.2.5.7.5 1.4v2.2c0 .2.1.5.5.4A8 8 0 0 0 16 8a8 8 0 0 0-8-8z"/></svg>
-                </a>
-              }
-            </div>
-            <div class="mt-2 prose prose-slate dark:prose-invert" [innerHTML]="project.description | richText"></div>
-            @if (project.link?.url) {
-              <a [href]="project.link.url"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 class="btn-link mt-4 w-full">
-                Go to project domain
-                <span>
-                  <svg width="1em" height="1em" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"/></svg>
-                </span>
-              </a>
+    <article
+      #projectCard
+      class="opacity-0 scale-90 translate-y-[-50px] transition-border group flex flex-col md:grid md:grid-cols-2 md:h-[22rem] p-4 md:p-6 overflow-hidden rounded-lg dark:border-1 shadow-lg backdrop-blur-sm dark:border-slate-900 dark:hover:border-slate-700"
+    >
+      <div
+        class="flex flex-col justify-between text-left group-[:nth-child(even)]:md:order-last"
+      >
+        <div class="rounded-xl bg-gray-50 p-6 dark:bg-slate-800/10">
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-semibold text-slate-900 dark:text-white">
+              {{ project.title }}
+            </h3>
+            @if (project.github_link?.url) {
+            <a
+              [href]="project.github_link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-slate-500 transition-colors transition-transform hover:scale-125 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-100"
+              aria-label="View project on GitHub"
+            >
+              <svg
+                fill="currentColor"
+                class="size-5 mt-0.5"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 0a8 8 0 0 0-2.5 15.6c.4 0 .5-.2.5-.4v-1.5c-2 .4-2.5-.5-2.7-1 0-.1-.5-.9-.8-1-.3-.2-.7-.6 0-.6.6 0 1 .6 1.2.8.7 1.2 1.9 1 2.4.7 0-.5.2-.9.5-1-1.8-.3-3.7-1-3.7-4 0-.9.3-1.6.8-2.2 0-.2-.3-1 .1-2 0 0 .7-.3 2.2.7a7.4 7.4 0 0 1 4 0c1.5-1 2.2-.8 2.2-.8.5 1.1.2 2 .1 2.1.5.6.8 1.3.8 2.2 0 3-1.9 3.7-3.6 4 .3.2.5.7.5 1.4v2.2c0 .2.1.5.5.4A8 8 0 0 0 16 8a8 8 0 0 0-8-8z"
+                />
+              </svg>
+            </a>
             }
           </div>
-          <ul class="mt-2 flex flex-wrap gap-3">
-            @for (technology of project.technologies; track technology._uid) {
-              <li class="tag-pill !px-3 !py-1 text-xs">
-                {{ technology.text }}
-              </li>
-            }
-          </ul>
+          <div
+            class="mt-2 prose prose-slate dark:prose-invert"
+            [innerHTML]="project.description | richText"
+          ></div>
+          @if (project.link?.url) {
+          <a
+            [href]="project.link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-link mt-4 w-full"
+          >
+            Go to project domain
+            <span>
+              <svg
+                width="1em"
+                height="1em"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m4-3h6v6m-11 5L21 3"
+                />
+              </svg>
+            </span>
+          </a>
+          }
         </div>
-        <div class="relative aspect-4/3 h-full pointer-events-none">
-          <img [ngSrc]="project.image.filename"
-               [alt]="project.image.alt"
-               width="448"
-               height="336"
-               ngSrcset="448w, 896w"
-               sizes="(max-width: 768px) 100vw, 448px"
-               class="absolute -right-15 w-[28rem] h-[25rem] rounded-xl object-cover shadow-2xl transition-transform duration-150 group-even:-left-41.5 group-hover:-translate-x-5 group-hover:-rotate-2 group-hover:scale-110 group-hover:translate-y-5 group-even:group-hover:rotate-2 group-even:group-hover:translate-x-5" />
-        </div>
-      </article>
+        <ul class="mt-2 flex flex-wrap justify-center gap-3">
+          @for (technology of project.technologies; track technology._uid) {
+          <li class="tag-pill !px-3 !py-1 text-xs">{{ technology.text }}</li>
+          }
+        </ul>
+      </div>
+      <div
+        class="flex justify-center mt-6 md:block md:mt-0 md:relative md:h-full"
+      >
+        <img
+          [ngSrc]="project.image.filename"
+          [alt]="project.image.alt"
+          width="448"
+          height="336"
+          ngSrcset="448w, 896w"
+          sizes="(max-width: 768px) 90vw, 448px"
+          class="w-11/12 h-auto rounded-lg object-cover shadow-lg transition-transform duration-150 md:w-[28rem] md:h-[25rem] md:absolute md:rounded-xl md:shadow-2xl md:-right-15 group-[:nth-child(even)]:md:-left-15 md:group-hover:-translate-x-5 md:group-hover:-rotate-2 md:group-hover:scale-110 md:group-hover:translate-y-5 group-[:nth-child(even)]:md:group-hover:rotate-2 group-[:nth-child(even)]:md:group-hover:translate-x-5"
+        />
+      </div>
+    </article>
     }
   </div>
 </app-section-wrapper>
