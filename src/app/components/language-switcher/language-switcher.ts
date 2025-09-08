@@ -15,13 +15,21 @@ interface Language {
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <div class="flex items-center space-x-3">
-      @for (lang of otherLanguages; track lang.code) {
-        <a [routerLink]="lang.path" [title]="'Switch to ' + lang.name" class="opacity-60 hover:opacity-100 transition-opacity">
-          <img [src]="lang.flag" [alt]="lang.name + ' flag'" class="w-6 h-auto rounded-sm">
-        </a>
-      }
-    </div>
+    @for (lang of otherLanguages; track lang.code) {
+      <a
+        [routerLink]="lang.path"
+        [title]="'Switch to ' + lang.name"
+        class="hover:scale-125 cursor-pointer fixed bottom-6 left-6 w-12 h-12
+               bg-white dark:bg-neutral-900
+               hover:bg-gray-100 dark:hover:bg-neutral-800
+               dark:border dark:border-purple-600/50
+               rounded-full shadow-lg
+               flex items-center justify-center
+               duration-150"
+      >
+        <img [src]="lang.flag" [alt]="lang.name + ' flag'" class="w-6 h-auto rounded-sm">
+      </a>
+    }
   `,
 })
 export class LanguageSwitcher {
