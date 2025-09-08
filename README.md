@@ -129,11 +129,6 @@ On every pull request to the `main` branch, the following actions are performed:
 
 This allows for easy review of changes in a live environment before merging them into the main branch.
 
----
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information. (Note: A LICENSE file was not present at the time of this generation, but MIT is a common choice for such projects).
 
 ---
 
