@@ -22,13 +22,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 })
 export class Experience implements AfterViewInit, OnDestroy {
   @Input() blok: any;
-
   @ViewChild('experienceWrapper', { read: ElementRef }) wrapper!: ElementRef<HTMLElement>;
   @ViewChild('experienceTitle') title!: ElementRef<HTMLHeadingElement>;
   @ViewChild('timelineBar') timelineBar!: ElementRef<HTMLDivElement>;
   @ViewChildren('experienceItem') items!: QueryList<ElementRef<HTMLLIElement>>;
 
-  private timelines: gsap.core.Timeline[] = [];
+  private mm!: gsap.MatchMedia;
+  private mainTl!: gsap.core.Timeline;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -47,58 +47,80 @@ export class Experience implements AfterViewInit, OnDestroy {
 
     const wrapperEl = this.wrapper.nativeElement;
 
-    const mainTl = gsap.timeline({
+    this.mainTl = gsap.timeline({
       scrollTrigger: {
         trigger: wrapperEl,
         start: 'top 70%',
-        toggleActions: 'play none none none'
+        toggleActions: 'play none none none',
       }
     });
 
-    mainTl
+    this.mainTl
       .from(this.title.nativeElement, { opacity: 0, y: 30, duration: 0.4, ease: 'power4.out' })
       .from(this.timelineBar.nativeElement, { scaleY: 0, duration: 1, ease: 'power4.inOut' }, '-=0.5');
 
-    this.timelines.push(mainTl);
+    this.mm = gsap.matchMedia();
 
-    this.items.forEach((itemRef, index) => {
-      const itemEl = itemRef.nativeElement;
-      const card = itemEl.querySelector('.timeline-card');
-      const time = itemEl.querySelector('time');
-      const marker = itemEl.querySelector('.timeline-marker');
+    this.mm.add('(min-width: 1024px)', () => {
+      this.items.forEach((itemRef, index) => {
+        const itemEl = itemRef.nativeElement;
+        const card = itemEl.querySelector('.timeline-card');
+        const time = itemEl.querySelector('time');
+        const marker = itemEl.querySelector('.timeline-marker');
 
-      if (!card || !time || !marker) return;
+        if (!card || !time || !marker) return;
 
-      const itemTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: itemEl,
-          start: 'top 75%',
-          toggleActions: 'play none none none'
-        }
+        const itemTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: itemEl,
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+          }
+        });
+
+        itemTl
+          .fromTo(marker, { scale: 0, opacity: 0 }, { scale: 1.5, opacity: 1, duration: 0.3, ease: 'power2.out' })
+          .to(marker, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.75)' });
+
+        const isOdd = index % 2 === 0;
+        const cardX = isOdd ? -100 : 100;
+        const timeX = isOdd ? 100 : -100;
+
+        itemTl
+          .from(card, { xPercent: cardX, opacity: 0, duration: 0.45, ease: 'power4.inOut' }, '<')
+          .from(time, { xPercent: timeX, opacity: 0, duration: 0.45, ease: 'power4.inOut' }, '<');
       });
+    });
 
-      itemTl.fromTo(marker,
-        { scale: 0, opacity: 0 },
-        { scale: 1.5, opacity: 1, duration: 0.3, ease: 'power2.out' }
-      ).to(marker,
-        { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.75)' }
-      );
+    this.mm.add('(max-width: 1023px)', () => {
+      this.items.forEach(itemRef => {
+        const itemEl = itemRef.nativeElement;
+        const card = itemEl.querySelector('.timeline-card');
+        const marker = itemEl.querySelector('.timeline-marker');
 
-      const isOdd = index % 2 === 0;
-      const cardX = isOdd ? -100 : 100;
-      const timeX = isOdd ? 100 : -100;
+        if (!card || !marker) return;
 
-      itemTl
-        .from(card, { xPercent: cardX, opacity: 0, duration: 0.45, ease: 'power4.inOut' }, '<')
-        .from(time, { xPercent: timeX, opacity: 0, duration: 0.45, ease: 'power4.inOut' }, '<');
+        const itemTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: itemEl,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        });
 
-      this.timelines.push(itemTl);
+        itemTl
+          .fromTo(marker, { scale: 0, opacity: 0 }, { scale: 1.5, opacity: 1, duration: 0.3, ease: 'power2.out' })
+          .to(marker, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.75)' });
+
+        itemTl.from(card, { y: 40, opacity: 0, duration: 0.5, ease: 'power2.out' }, '<');
+      });
     });
   }
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.timelines.forEach(tl => tl.kill());
+      this.mainTl?.kill();
+      this.mm?.revert();
     }
   }
 }
