@@ -7,7 +7,7 @@
   <div class="relative mt-20 lg:mt-28">
     <div
       #timelineBar
-      class="absolute -top-[5%] h-[110%] w-1 bg-gray-200 dark:bg-purple-900/40 left-6 -translate-x-1/2 lg:left-1/2"
+      class="absolute -top-[5%] h-[100%] w-1 bg-gray-200 dark:bg-purple-900/40 left-6 -translate-x-1/2 lg:h-[110%] lg:left-1/2"
       aria-hidden="true"
     ></div>
 
@@ -42,9 +42,9 @@
         <div
           class="row-start-1 -mt-0.5 hidden h-12 items-center lg:flex lg:group-odd:col-start-3 lg:group-even:col-start-1 lg:group-even:justify-end"
         >
-          <time class="text-gray-600 dark:text-purple-300">{{
-            experience.timeline
-          }}</time>
+          <time class="text-gray-600 dark:text-purple-300"
+            >{{ experience.timeline }}</time
+          >
         </div>
 
         <div class="timeline-marker row-start-1 col-start-1 lg:col-start-2">
