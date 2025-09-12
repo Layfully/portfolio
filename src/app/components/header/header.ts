@@ -115,8 +115,8 @@ export class Header implements AfterViewInit, OnDestroy {
   }
 
   private observeAllSections(): void {
-    this.blok.links.forEach((sectionId: string) => {
-      const element = document.getElementById(sectionId);
+    this.blok.links.forEach((link: any) => {
+      const element = document.getElementById(link.section_id);
       if (element) {
         this.intersectionObserver!.observe(element);
       }
