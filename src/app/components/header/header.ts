@@ -140,9 +140,16 @@ private updateHighlight(): void {
   }
 }
 
-  onLinkClick(sectionId: string): void {
+  onLinkClick(sectionId: string, event: MouseEvent): void {
+    event.preventDefault();
+
     this.isNavigating = true;
     this.activeSection = sectionId;
     this.updateHighlight();
+
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 }
