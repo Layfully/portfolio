@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 })
 export class SeoService {
   private readonly siteUrl = 'https://portfolio.adriangaborek.dev';
-  private hreflangLinks: HTMLLinkElement[] = [];
 
   constructor(
     private title: Title,
@@ -59,8 +58,8 @@ export class SeoService {
   }
 
   private updateHreflangLinks(): void {
-    this.hreflangLinks.forEach(link => this.doc.head.removeChild(link));
-    this.hreflangLinks = [];
+    const existingLinks: NodeListOf<HTMLLinkElement> = this.doc.querySelectorAll('link[rel="alternate"][hreflang]');
+    existingLinks.forEach(link => this.doc.head.removeChild(link));
 
     const createHreflangLink = (langCode: string, path: string) => {
       const link: HTMLLinkElement = this.doc.createElement('link');
@@ -68,7 +67,6 @@ export class SeoService {
       link.setAttribute('hreflang', langCode);
       link.setAttribute('href', `${this.siteUrl}${path}`);
       this.doc.head.appendChild(link);
-      this.hreflangLinks.push(link);
     };
 
     createHreflangLink('en', '/');
