@@ -1,10 +1,12 @@
 import { Component, Input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
+  imports: [RouterLink]
 })
 export class Header implements AfterViewInit, OnDestroy {
   @Input() blok: any;
@@ -123,33 +125,26 @@ export class Header implements AfterViewInit, OnDestroy {
     });
   }
 
-private updateHighlight(): void {
-  const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection}"]`);
-  const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight') as HTMLElement;
-  const nav = this.elementRef.nativeElement.querySelector('ul');
+  private updateHighlight(): void {
+    const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection}"]`);
+    const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight') as HTMLElement;
+    const nav = this.elementRef.nativeElement.querySelector('ul');
 
-  if (activeLink && highlight && nav) {
-    const navRect = nav.getBoundingClientRect();
-    const linkRect = activeLink.getBoundingClientRect();
+    if (activeLink && highlight && nav) {
+      const navRect = nav.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
 
-    const xOffset = linkRect.left - navRect.left - 17.5;
-    const yOffset = linkRect.top - navRect.top - 15;
+      const xOffset = linkRect.left - navRect.left - 17.5;
+      const yOffset = linkRect.top - navRect.top - 15;
 
-    highlight.style.width = `${linkRect.width + 35}px`;
-    highlight.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      highlight.style.width = `${linkRect.width + 35}px`;
+      highlight.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+    }
   }
-}
 
-  onLinkClick(sectionId: string, event: MouseEvent): void {
-    event.preventDefault();
-
+  onLinkClick(sectionId: string): void {
     this.isNavigating = true;
     this.activeSection = sectionId;
     this.updateHighlight();
-
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   }
 }
