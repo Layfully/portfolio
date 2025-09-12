@@ -20,8 +20,6 @@ export class Header implements AfterViewInit, OnDestroy {
   private isNavigating = false;
   private scrollEndTimer: any;
 
-  protected readonly sections = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Contact'];
-
   constructor(
     private elementRef: ElementRef,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -117,7 +115,7 @@ export class Header implements AfterViewInit, OnDestroy {
   }
 
   private observeAllSections(): void {
-    this.sections.forEach(sectionId => {
+    this.blok.links.forEach((sectionId: string) => {
       const element = document.getElementById(sectionId);
       if (element) {
         this.intersectionObserver!.observe(element);

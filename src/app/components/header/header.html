@@ -8,12 +8,12 @@
     sm:rounded-full
   ">
     <li class="nav-highlight"></li>
-    @for (section of sections; track section) {
+    @for (link of blok.links; track link._uid) {
       <li class="flex">
-        <a [href]="'#' + section"
+        <a [href]="'#' + link.section_id"
            class="header-link"
-           [class.active]="activeSection === section"
-           (click)="onLinkClick(section)">{{ section }}</a>
+           [class.active]="activeSection === link.section_id"
+           (click)="onLinkClick(link.section_id)">{{ link.label }}</a>
       </li>
     }
   </ul>
