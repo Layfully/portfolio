@@ -45,7 +45,7 @@ export class Skills implements AfterViewInit, OnDestroy {
     }
 
     const wrapperElement = this.skillsWrapper.nativeElement;
-    const titleElement = wrapperElement.querySelector('h2');
+    const titleElement = wrapperElement.querySelector('h1');
     const tagElements = this.skillTags.map(tagRef => tagRef.nativeElement);
 
     if (!titleElement) return;
