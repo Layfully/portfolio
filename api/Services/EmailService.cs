@@ -37,7 +37,7 @@ public class EmailService : IEmailService
 
             if (response.IsSuccessStatusCode)
             {
-                _logger.LogInformation("Email sent successfully from {Email}", userEmail);
+                _logger.LogInformation("Email sent successfully");
                 return true;
             }
             else
@@ -48,7 +48,7 @@ public class EmailService : IEmailService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error occurred while sending email from {Email}", userEmail);
+            _logger.LogError(ex, "Error occurred while sending email");
             return false;
         }
     }
