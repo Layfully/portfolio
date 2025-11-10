@@ -22,7 +22,7 @@
     "@angular/platform-server": "^20.3.9",
     "@angular/router": "^20.3.9",
     "@angular/service-worker": "^20.3.9",
-    "@angular/ssr": "^20.3.8",
+    "@angular/ssr": "^20.3.9",
     "@storyblok/js": "^4.4.1",
     "@tailwindcss/postcss": "^4.1.16",
     "express": "^5.1.0",
