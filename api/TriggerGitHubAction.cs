@@ -40,7 +40,6 @@ public class TriggerGitHubAction
             return req.CreateResponse(HttpStatusCode.Unauthorized);
         }
 
-
         _logger.LogInformation("Secret key is valid.");
 
         _logger.LogInformation("Processing request to trigger GitHub Action build.");
@@ -73,12 +72,10 @@ public class TriggerGitHubAction
                 await successResponse.WriteStringAsync("Build successfully triggered.");
                 return successResponse;
             }
-            else
-            {
-                var errorContent = await response.Content.ReadAsStringAsync();
-                _logger.LogError("Failed to trigger GitHub Action. Status: {StatusCode}, Reason: {Reason}", response.StatusCode, errorContent);
-                return await CreateErrorResponse(req, HttpStatusCode.BadGateway, "Failed to communicate with GitHub.");
-            }
+
+            var errorContent = await response.Content.ReadAsStringAsync();
+            _logger.LogError("Failed to trigger GitHub Action. Status: {StatusCode}, Reason: {Reason}", response.StatusCode, errorContent);
+            return await CreateErrorResponse(req, HttpStatusCode.BadGateway, "Failed to communicate with GitHub.");
         }
         catch (Exception ex)
         {
