@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -7,14 +7,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class SeoService {
-  private readonly siteUrl = 'https://portfolio.adriangaborek.dev';
+  private title = inject(Title);
+  private meta = inject(Meta);
+  private router = inject(Router);
+  private doc = inject<Document>(DOCUMENT);
 
-  constructor(
-    private title: Title,
-    private meta: Meta,
-    private router: Router,
-    @Inject(DOCUMENT) private doc: Document
-  ) { }
+  private readonly siteUrl = 'https://portfolio.adriangaborek.dev';
 
   /**
    * Sets all the essential SEO meta tags for a page.

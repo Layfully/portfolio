@@ -31,21 +31,21 @@
 
 @if (blokMap$ | async; as blokMap) {
   @if (blokMap['header_navigation']) {
-    <app-header [blok]="blokMap['header_navigation']"></app-header>
+    <app-header [blok]="blokMap['header_navigation']" />
     <div class="fixed top-6 right-6 lg:top-10.5 lg:right-9 z-50">
-      <app-language-switcher></app-language-switcher>
+      <app-language-switcher />
     </div>
   }
 
   @defer (on idle; prefetch on immediate) {
     @if (blokMap['hero']) {
-      <app-hero [blok]="blokMap['hero']"></app-hero>
+      <app-hero [blok]="blokMap['hero']" />
     }
     @if (blokMap['about']) {
-      <app-about [blok]="blokMap['about']"></app-about>
+      <app-about [blok]="blokMap['about']" />
     }
     @if (blokMap['projects']) {
-      <app-projects [blok]="blokMap['projects']"></app-projects>
+      <app-projects [blok]="blokMap['projects']" />
     }
   } @placeholder (minimum 100ms) {
       <div class="skeleton-hero"></div>
@@ -53,16 +53,16 @@
 
   @defer (on viewport; prefetch on idle) {
     @if (blokMap['skills']) {
-      <app-skills [blok]="blokMap['skills']"></app-skills>
+      <app-skills [blok]="blokMap['skills']" />
     }
     @if (blokMap['experience']) {
-      <app-experience [blok]="blokMap['experience']"></app-experience>
+      <app-experience [blok]="blokMap['experience']" />
     }
     @if (blokMap['contact']) {
-      <app-contact [blok]="blokMap['contact']"></app-contact>
+      <app-contact [blok]="blokMap['contact']" />
     }
     @if (blokMap['footer']) {
-      <app-footer [blok]="blokMap['footer']"></app-footer>
+      <app-footer [blok]="blokMap['footer']" />
     }
   } @placeholder (minimum 700ms) {
     <div class="skeleton-section"></div>

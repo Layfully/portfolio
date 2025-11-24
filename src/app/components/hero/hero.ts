@@ -1,14 +1,4 @@
-import {
-  Component,
-  input,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, input, AfterViewInit, OnDestroy, ElementRef, PLATFORM_ID, ChangeDetectionStrategy, inject, viewChild } from '@angular/core';
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
@@ -22,16 +12,16 @@ import { gsap } from 'gsap';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Hero implements AfterViewInit, OnDestroy {
+  private platformId = inject<Object>(PLATFORM_ID);
+
   blok = input.required<any>();
 
-  @ViewChild('profileImageContainer') profileImage!: ElementRef<HTMLDivElement>;
-  @ViewChild('wavingHand') wavingHand!: ElementRef<HTMLSpanElement>;
-  @ViewChild('introText') introText!: ElementRef<HTMLHeadingElement>;
-  @ViewChild('buttonGroup') buttonGroup!: ElementRef<HTMLDivElement>;
+  readonly profileImage = viewChild.required<ElementRef<HTMLDivElement>>('profileImageContainer');
+  readonly wavingHand = viewChild.required<ElementRef<HTMLSpanElement>>('wavingHand');
+  readonly introText = viewChild.required<ElementRef<HTMLHeadingElement>>('introText');
+  readonly buttonGroup = viewChild.required<ElementRef<HTMLDivElement>>('buttonGroup');
 
   private tl?: gsap.core.Timeline;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -40,7 +30,11 @@ export class Hero implements AfterViewInit, OnDestroy {
   }
 
   initAnimation(): void {
-    if (!this.profileImage || !this.wavingHand || !this.introText || !this.buttonGroup) {
+    const profileImage = this.profileImage();
+    const wavingHand = this.wavingHand();
+    const introText = this.introText();
+    const buttonGroup = this.buttonGroup();
+    if (!profileImage || !wavingHand || !introText || !buttonGroup) {
       return;
     }
 
@@ -49,26 +43,26 @@ export class Hero implements AfterViewInit, OnDestroy {
     });
 
     this.tl
-      .to(this.profileImage.nativeElement, { scale: 1, opacity:1, duration: .3, ease: 'power3.out'})
-      .to(this.introText.nativeElement, {
+      .to(profileImage.nativeElement, { scale: 1, opacity:1, duration: .3, ease: 'power3.out'})
+      .to(introText.nativeElement, {
         y: 0,
         opacity: 1,
         duration: 0.4,
         ease: 'back.inOut'
       }, '-=0.7')
-      .to(this.buttonGroup.nativeElement, {
+      .to(buttonGroup.nativeElement, {
         y: 0,
         opacity: 1,
         duration: 0.4,
         ease: 'back.inOut'
       }, '-=0.6')
-      .to(this.wavingHand.nativeElement, {
+      .to(wavingHand.nativeElement, {
         scale: 1,
         opacity: 1,
         duration: 0.4,
         ease: 'back.out(1.7)'
       }, '-=0.5')
-      .to(this.wavingHand.nativeElement, {
+      .to(wavingHand.nativeElement, {
         keyframes: {
           '0%': { rotate: 0 },
           '25%': { rotate: -20 },

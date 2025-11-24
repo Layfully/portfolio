@@ -1,14 +1,4 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, PLATFORM_ID, ChangeDetectionStrategy, inject, input, viewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
@@ -23,14 +13,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class About implements AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  private platformId = inject<Object>(PLATFORM_ID);
 
-  @ViewChild('aboutTitle') title!: ElementRef<HTMLHeadingElement>;
-  @ViewChild('aboutContent') contentBlock!: ElementRef<HTMLDivElement>;
+  readonly blok = input<any>();
+
+  readonly title = viewChild.required<ElementRef<HTMLHeadingElement>>('aboutTitle');
+  readonly contentBlock = viewChild.required<ElementRef<HTMLDivElement>>('aboutContent');
 
   private tl?: gsap.core.Timeline;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -41,12 +31,14 @@ export class About implements AfterViewInit, OnDestroy {
   initAnimation(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!this.title?.nativeElement || !this.contentBlock?.nativeElement) {
+    const title = this.title();
+    const contentBlock = this.contentBlock();
+    if (!title?.nativeElement || !contentBlock?.nativeElement) {
       return;
     }
 
-    const titleEl = this.title.nativeElement;
-    const contentEl = this.contentBlock.nativeElement;
+    const titleEl = title.nativeElement;
+    const contentEl = contentBlock.nativeElement;
 
     this.tl = gsap.timeline({
       delay: 0.2

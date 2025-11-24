@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
 import { StoryblokService } from '../../services/storyblok.service';
 import { SeoService } from '../../services/seo.service';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
@@ -32,10 +32,12 @@ import { LanguageSwitcher } from "../language-switcher/language-switcher";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Home implements OnInit {
+  private storyblokService = inject(StoryblokService);
+  private seoService = inject(SeoService);
+  private route = inject(ActivatedRoute);
+
 
   blokMap$: Observable<Record<string, any>> = of({});
-
-  constructor(private storyblokService: StoryblokService, private seoService: SeoService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.blokMap$ = this.route.data.pipe(

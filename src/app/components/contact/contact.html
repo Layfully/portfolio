@@ -1,7 +1,7 @@
 <app-section-wrapper id="Contact" class="max-w-xl lg:max-w-2xl px-4 sm:px-6 lg:px-8" #contactWrapper>
-  <h1 #contactTitle class="title">{{ blok.title }}</h1>
+  <h1 #contactTitle class="title">{{ blok().title }}</h1>
   <div #contactPrompt class="prose prose-sm sm:prose-base md:prose-lg dark:prose-invert mt-4 sm:mt-6 md:mt-8"
-    [innerHTML]="blok.prompt | richText"></div>
+    [innerHTML]="blok().prompt | richText"></div>
 
   @if (submissionStatus === 'success') {
     <div #successMessageContainer class="toast bg-green-50  dark:bg-green-900/20 ring-green-600/20">
@@ -24,14 +24,14 @@
       type="email"
       id="email"
       formControlName="email"
-      [placeholder]="blok.email_placeholder"
+      [placeholder]="blok().email_placeholder"
       required
       class="form-input"
     />
     <textarea
       id="message"
       formControlName="message"
-      [placeholder]="blok.message_placeholder"
+      [placeholder]="blok().message_placeholder"
       required
       maxlength="5000"
       rows="6"
@@ -43,7 +43,7 @@
         <span>Sending...</span>
         <svg class="animate-spin icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" class="opacity-25"/><path d="M4 12a8 8 0 0 1 8-8V0C5 0 0 5 0 12h4zm2 5a8 8 0 0 1-2-5H0c0 3 1 6 3 8l3-3z"/></svg>
       } @else {
-        <span>{{ blok.send_text }}</span>
+        <span>{{ blok().send_text }}</span>
         <svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="m3 20 18-7v-2L3 4 2 5v4l1 1 14 2-14 2-1 1v4l1 1z"/></svg>
       }
     </button>

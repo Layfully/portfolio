@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
@@ -12,9 +12,9 @@ interface Story {
   providedIn: 'root'
 })
 export class StoryblokService {
-  private storiesCache = new Map<string, Observable<Story[]>>();
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private storiesCache = new Map<string, Observable<Story[]>>();
 
   /**
    * Gets all stories for a specific language.

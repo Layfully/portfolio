@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { renderRichText } from '@storyblok/js';
 
@@ -6,7 +6,8 @@ import { renderRichText } from '@storyblok/js';
   name: 'richText'
 })
 export class RichTextPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
+  private sanitizer = inject(DomSanitizer);
+
 
   transform = (value: any): SafeHtml =>
     this.sanitizer.bypassSecurityTrustHtml(renderRichText(value) ?? '');

@@ -1,14 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  PLATFORM_ID,
-  Inject, ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, PLATFORM_ID, ChangeDetectionStrategy, inject, input, viewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
@@ -26,17 +16,21 @@ type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Contact implements OnInit, AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  private formBuilder = inject(FormBuilder);
+  private contactService = inject(ContactService);
+  private platformId = inject<Object>(PLATFORM_ID);
+
+  readonly blok = input<any>();
   public contactForm!: FormGroup;
   public submissionStatus: SubmissionStatus = 'idle';
 
   private initialRevealAnim?: gsap.core.Tween;
   private resultTimeoutId?: number;
 
-  @ViewChild('contactWrapper', { read: ElementRef, static: true }) private contactWrapper!: ElementRef<HTMLElement>;
-  @ViewChild('contactTitle', { read: ElementRef, static: true }) private contactTitle!: ElementRef<HTMLHeadingElement>;
-  @ViewChild('contactPrompt', { read: ElementRef, static: true }) private contactPrompt!: ElementRef<HTMLDivElement>;
-  @ViewChild('formElement', { read: ElementRef }) private formElement!: ElementRef<HTMLFormElement>;
+  private readonly contactWrapper = viewChild.required('contactWrapper', { read: ElementRef });
+  private readonly contactTitle = viewChild.required('contactTitle', { read: ElementRef });
+  private readonly contactPrompt = viewChild.required('contactPrompt', { read: ElementRef });
+  private readonly formElement = viewChild.required('formElement', { read: ElementRef });
 
   private successMessageRef?: ElementRef<HTMLDivElement>;
   @ViewChild('successMessageContainer') set successMessageContainer(el: ElementRef<HTMLDivElement> | undefined) {
@@ -53,12 +47,6 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
       this.animateResultIn(el.nativeElement);
     }
   }
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private contactService: ContactService,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
 
   ngOnInit(): void {
     this.contactForm = this.formBuilder.group({
@@ -105,13 +93,15 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
   private initScrollAnimation(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!this.contactWrapper || !this.formElement) return;
+    const contactWrapper = this.contactWrapper();
+    const formElement = this.formElement();
+    if (!contactWrapper || !formElement) return;
 
     const elementsToAnimate = [
-      this.contactTitle.nativeElement,
-      this.contactPrompt.nativeElement,
-      ...gsap.utils.toArray(this.formElement.nativeElement.querySelectorAll('.form-input')),
-      this.formElement.nativeElement.querySelector('.btn-submit')
+      this.contactTitle().nativeElement,
+      this.contactPrompt().nativeElement,
+      ...gsap.utils.toArray(formElement.nativeElement.querySelectorAll('.form-input')),
+      formElement.nativeElement.querySelector('.btn-submit')
     ];
 
     this.initialRevealAnim = gsap.from(elementsToAnimate, {
@@ -121,7 +111,7 @@ export class Contact implements OnInit, AfterViewInit, OnDestroy {
       ease: 'power2.out',
       stagger: 0.05,
       scrollTrigger: {
-        trigger: this.contactWrapper.nativeElement,
+        trigger: contactWrapper.nativeElement,
         start: 'top 75%',
         toggleActions: 'play none none none'
       }

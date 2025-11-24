@@ -1,4 +1,4 @@
-import { Component, input, ViewChild, ElementRef, AfterViewInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, ElementRef, AfterViewInit, signal, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import gsap from 'gsap';
 
@@ -11,17 +11,17 @@ import gsap from 'gsap';
 })
 export class Footer implements AfterViewInit {
   blok = input.required<any>();
-  @ViewChild('content') contentEl!: ElementRef<HTMLDivElement>;
+  readonly contentEl = viewChild.required<ElementRef<HTMLDivElement>>('content');
 
   expanded = signal(false);
   contentHeight = 0;
 
   ngAfterViewInit() {
-    this.contentHeight = this.contentEl.nativeElement.scrollHeight;
+    this.contentHeight = this.contentEl().nativeElement.scrollHeight;
   }
 
   toggle() {
-    const el = this.contentEl.nativeElement;
+    const el = this.contentEl().nativeElement;
     const fullHeight = el.scrollHeight;
 
     if (!this.expanded()) {

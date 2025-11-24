@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -11,8 +11,9 @@ export interface ContactFormData {
   providedIn: 'root'
 })
 export class ContactService {
+  private http = inject(HttpClient);
+
   private apiUrl = '/api/send_email';
-  constructor(private http: HttpClient) {}
   /**
    * Sends the contact form data to the backend API.
    * @param formData The email and message from the user.

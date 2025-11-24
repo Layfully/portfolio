@@ -1,4 +1,4 @@
-import { Injectable, signal, effect, computed, PLATFORM_ID, Inject, OnDestroy } from '@angular/core';
+import { Injectable, signal, effect, computed, PLATFORM_ID, OnDestroy, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 export type Theme = 'light' | 'dark' | 'system';
@@ -19,7 +19,9 @@ export class ThemeService implements OnDestroy {
     this.theme() === 'system' ? this.systemPrefersDark() : this.theme() === 'dark'
   );
 
-  constructor(@Inject(PLATFORM_ID) platformId: object) {
+  constructor() {
+    const platformId = inject(PLATFORM_ID);
+
     this.isBrowser = isPlatformBrowser(platformId);
 
     if (!this.isBrowser) return;

@@ -1,16 +1,4 @@
-import {
-  Component,
-  input,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  ViewChildren,
-  ElementRef,
-  QueryList,
-  PLATFORM_ID,
-  Inject,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, input, AfterViewInit, OnDestroy, ElementRef, PLATFORM_ID, ChangeDetectionStrategy, inject, viewChild, viewChildren } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { gsap } from 'gsap';
@@ -23,16 +11,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Experience implements AfterViewInit, OnDestroy {
+  private platformId = inject<Object>(PLATFORM_ID);
+
   blok = input.required<any>();
-  @ViewChild('experienceWrapper', { read: ElementRef }) wrapper!: ElementRef<HTMLElement>;
-  @ViewChild('experienceTitle') title!: ElementRef<HTMLHeadingElement>;
-  @ViewChild('timelineBar') timelineBar!: ElementRef<HTMLDivElement>;
-  @ViewChildren('experienceItem') items!: QueryList<ElementRef<HTMLLIElement>>;
+  readonly wrapper = viewChild.required('experienceWrapper', { read: ElementRef });
+  readonly title = viewChild.required<ElementRef<HTMLHeadingElement>>('experienceTitle');
+  readonly timelineBar = viewChild.required<ElementRef<HTMLDivElement>>('timelineBar');
+  readonly items = viewChildren<ElementRef<HTMLLIElement>>('experienceItem');
 
   private mm!: gsap.MatchMedia;
   private mainTl!: gsap.core.Timeline;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -43,11 +31,14 @@ export class Experience implements AfterViewInit, OnDestroy {
   initAnimation(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!this.wrapper?.nativeElement || !this.title?.nativeElement || !this.timelineBar?.nativeElement || this.items.length === 0) {
+    const wrapper = this.wrapper();
+    const title = this.title();
+    const timelineBar = this.timelineBar();
+    if (!wrapper?.nativeElement || !title?.nativeElement || !timelineBar?.nativeElement || this.items().length === 0) {
       return;
     }
 
-    const wrapperEl = this.wrapper.nativeElement;
+    const wrapperEl = wrapper.nativeElement;
 
     this.mainTl = gsap.timeline({
       scrollTrigger: {
@@ -58,13 +49,13 @@ export class Experience implements AfterViewInit, OnDestroy {
     });
 
     this.mainTl
-      .from(this.title.nativeElement, { opacity: 0, y: 30, duration: 0.4, ease: 'power4.out' })
-      .from(this.timelineBar.nativeElement, { scaleY: 0, duration: 1, ease: 'power4.inOut' }, '-=0.5');
+      .from(title.nativeElement, { opacity: 0, y: 30, duration: 0.4, ease: 'power4.out' })
+      .from(timelineBar.nativeElement, { scaleY: 0, duration: 1, ease: 'power4.inOut' }, '-=0.5');
 
     this.mm = gsap.matchMedia();
 
     this.mm.add('(min-width: 1024px)', () => {
-      this.items.forEach((itemRef, index) => {
+      this.items().forEach((itemRef, index) => {
         const itemEl = itemRef.nativeElement;
         const card = itemEl.querySelector('.timeline-card');
         const time = itemEl.querySelector('time');
@@ -95,7 +86,7 @@ export class Experience implements AfterViewInit, OnDestroy {
     });
 
     this.mm.add('(max-width: 1023px)', () => {
-      this.items.forEach(itemRef => {
+      this.items().forEach(itemRef => {
         const itemEl = itemRef.nativeElement;
         const card = itemEl.querySelector('.timeline-card');
         const marker = itemEl.querySelector('.timeline-marker');

@@ -1,4 +1,4 @@
-import { Component, input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID, ViewChild, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, AfterViewInit, OnDestroy, ElementRef, PLATFORM_ID, signal, ChangeDetectionStrategy, inject, viewChild } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
 import { RouterLink } from '@angular/router';
@@ -10,9 +10,12 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Header implements AfterViewInit, OnDestroy {
+  private elementRef = inject(ElementRef);
+  private platformId = inject<Object>(PLATFORM_ID);
+
   blok = input.required<any>();
 
-  @ViewChild('headerNav') headerNav!: ElementRef<HTMLElement>;
+  readonly headerNav = viewChild.required<ElementRef<HTMLElement>>('headerNav');
 
   activeSection = signal('Home');
 
@@ -22,11 +25,6 @@ export class Header implements AfterViewInit, OnDestroy {
   private animation?: gsap.core.Tween;
   private isNavigating = false;
   private scrollEndTimer: any;
-
-  constructor(
-    private elementRef: ElementRef,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -51,9 +49,10 @@ export class Header implements AfterViewInit, OnDestroy {
   }
 
   private initAnimation(): void {
-    if (!this.headerNav?.nativeElement) return;
+    const headerNav = this.headerNav();
+    if (!headerNav?.nativeElement) return;
 
-    this.animation = gsap.to(this.headerNav.nativeElement, {
+    this.animation = gsap.to(headerNav.nativeElement, {
       y: 0,
       opacity: 1,
       duration: 0.4,

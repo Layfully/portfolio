@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy, inject } from '@angular/core';
 
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -34,6 +34,8 @@ interface Language {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LanguageSwitcher {
+  private router = inject(Router);
+
   currentLang = signal('en');
   otherLanguages = signal<Language[]>([]);
 
@@ -42,7 +44,7 @@ export class LanguageSwitcher {
     { code: 'pl', name: 'Polski', flag: '/assets/images/flags/pl.svg', path: '/pl' }
   ];
 
-  constructor(private router: Router) {
+  constructor() {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -7,5 +7,5 @@ import { ThemeService } from '../../services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThemeToggle {
-  constructor(public themeService: ThemeService) {}
+  themeService = inject(ThemeService);
 }

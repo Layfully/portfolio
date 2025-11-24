@@ -1,16 +1,4 @@
-import {
-  Component,
-  input,
-  AfterViewInit,
-  OnDestroy,
-  ViewChild,
-  ViewChildren,
-  ElementRef,
-  QueryList,
-  PLATFORM_ID,
-  Inject,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, input, AfterViewInit, OnDestroy, ElementRef, PLATFORM_ID, ChangeDetectionStrategy, inject, viewChild, viewChildren } from '@angular/core';
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
@@ -24,15 +12,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Projects implements AfterViewInit, OnDestroy {
+  private platformId = inject<Object>(PLATFORM_ID);
+
   blok = input.required<any>();
 
-  @ViewChild('projectsWrapper', { read: ElementRef }) wrapper!: ElementRef<HTMLElement>;
-  @ViewChild('projectsTitle') title!: ElementRef<HTMLHeadingElement>;
-  @ViewChildren('projectCard') projectCards!: QueryList<ElementRef<HTMLElement>>;
+  readonly wrapper = viewChild.required('projectsWrapper', { read: ElementRef });
+  readonly title = viewChild.required<ElementRef<HTMLHeadingElement>>('projectsTitle');
+  readonly projectCards = viewChildren<ElementRef<HTMLElement>>('projectCard');
 
   private triggers: ScrollTrigger[] = [];
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -43,23 +31,26 @@ export class Projects implements AfterViewInit, OnDestroy {
   initAnimation(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!this.wrapper?.nativeElement || !this.title?.nativeElement || this.projectCards.length === 0) {
+    const wrapper = this.wrapper();
+    const title = this.title();
+    const projectCards = this.projectCards();
+    if (!wrapper?.nativeElement || !title?.nativeElement || projectCards.length === 0) {
       return;
     }
 
-    gsap.to(this.title.nativeElement, {
+    gsap.to(title.nativeElement, {
       opacity: 1,
       y: 0,
       duration: 0.4,
       ease: 'power4.out',
       scrollTrigger: {
-        trigger: this.wrapper.nativeElement,
+        trigger: wrapper.nativeElement,
         start: 'top 80%',
         toggleActions: 'play none none none'
       }
     });
 
-    this.projectCards.forEach(cardRef => {
+    projectCards.forEach(cardRef => {
       const cardEl = cardRef.nativeElement;
 
       const tween = gsap.to(cardEl, {
@@ -84,8 +75,9 @@ export class Projects implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.triggers.forEach(trigger => trigger.kill());
-      if (this.title?.nativeElement) {
-        gsap.getTweensOf(this.title.nativeElement).forEach(tween => {
+      const title = this.title();
+      if (title?.nativeElement) {
+        gsap.getTweensOf(title.nativeElement).forEach(tween => {
           tween.kill();
         });
       }

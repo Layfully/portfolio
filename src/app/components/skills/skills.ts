@@ -1,16 +1,4 @@
-import {
-  Component,
-  input,
-  AfterViewInit,
-  ViewChild,
-  ViewChildren,
-  ElementRef,
-  QueryList,
-  OnDestroy,
-  PLATFORM_ID,
-  Inject,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, input, AfterViewInit, ElementRef, OnDestroy, PLATFORM_ID, ChangeDetectionStrategy, inject, viewChild, viewChildren } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
 import { gsap } from 'gsap';
@@ -25,13 +13,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Skills implements AfterViewInit, OnDestroy {
+  private platformId = inject<Object>(PLATFORM_ID);
+
   blok = input.required<any>();
-  @ViewChild('skillsWrapper', { read: ElementRef }) skillsWrapper!: ElementRef<HTMLElement>;
-  @ViewChildren('skillTag') skillTags!: QueryList<ElementRef<HTMLLIElement>>;
+  readonly skillsWrapper = viewChild.required('skillsWrapper', { read: ElementRef });
+  readonly skillTags = viewChildren<ElementRef<HTMLLIElement>>('skillTag');
 
   private tl?: gsap.core.Timeline;
-
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -42,13 +30,15 @@ export class Skills implements AfterViewInit, OnDestroy {
   initAnimation(): void {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (!this.skillsWrapper?.nativeElement || this.skillTags.length === 0) {
+    const skillsWrapper = this.skillsWrapper();
+    const skillTags = this.skillTags();
+    if (!skillsWrapper?.nativeElement || skillTags.length === 0) {
       return;
     }
 
-    const wrapperElement = this.skillsWrapper.nativeElement;
+    const wrapperElement = skillsWrapper.nativeElement;
     const titleElement = wrapperElement.querySelector('h1');
-    const tagElements = this.skillTags.map(tagRef => tagRef.nativeElement);
+    const tagElements = skillTags.map(tagRef => tagRef.nativeElement);
 
     if (!titleElement) return;
 
