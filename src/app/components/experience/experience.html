@@ -3,7 +3,7 @@
   class="max-w-5xl px-4 sm:px-6 lg:px-8"
   #experienceWrapper
 >
-  <h1 #experienceTitle class="title">{{ blok.title }}</h1>
+  <h1 #experienceTitle class="title">{{ blok().title }}</h1>
   <div class="relative mt-20 lg:mt-28">
     <div
       #timelineBar
@@ -12,7 +12,7 @@
     ></div>
 
     <ol class="relative space-y-12">
-      @for (experience of blok?.experiences; track experience._uid) {
+      @for (experience of blok()?.experiences; track experience._uid) {
       <li
         #experienceItem
         class="group grid grid-cols-[auto_1fr] lg:grid-cols-[1fr_auto_1fr] gap-x-6"

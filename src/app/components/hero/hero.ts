@@ -1,12 +1,13 @@
 import {
   Component,
-  Input,
+  input,
   AfterViewInit,
   OnDestroy,
   ViewChild,
   ElementRef,
   PLATFORM_ID,
-  Inject
+  Inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
@@ -17,10 +18,11 @@ import { gsap } from 'gsap';
 @Component({
   selector: 'app-hero',
   imports: [RichTextPipe, SectionWrapper, NgOptimizedImage],
-  templateUrl: './hero.html'
+  templateUrl: './hero.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Hero implements AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  blok = input.required<any>();
 
   @ViewChild('profileImageContainer') profileImage!: ElementRef<HTMLDivElement>;
   @ViewChild('wavingHand') wavingHand!: ElementRef<HTMLSpanElement>;

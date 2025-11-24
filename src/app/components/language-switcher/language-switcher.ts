@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+
 import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -13,9 +13,9 @@ interface Language {
 @Component({
   selector: 'app-language-switcher',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   template: `
-    @for (lang of otherLanguages; track lang.code) {
+    @for (lang of otherLanguages(); track lang.code) {
       <a
         [routerLink]="lang.path"
         [title]="'Switch to ' + lang.name"
@@ -31,10 +31,11 @@ interface Language {
       </a>
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LanguageSwitcher {
-  currentLang: string = 'en';
-  otherLanguages: Language[] = [];
+  currentLang = signal('en');
+  otherLanguages = signal<Language[]>([]);
 
   private allLanguages: Language[] = [
     { code: 'en', name: 'English', flag: '/assets/images/flags/us.svg', path: '/' },
@@ -52,7 +53,7 @@ export class LanguageSwitcher {
   }
 
   private updateLanguages(url: string): void {
-    this.currentLang = url.startsWith('/pl') ? 'pl' : 'en';
-    this.otherLanguages = this.allLanguages.filter(lang => lang.code !== this.currentLang);
+    this.currentLang.set(url.startsWith('/pl') ? 'pl' : 'en');
+    this.otherLanguages.set(this.allLanguages.filter(lang => lang.code !== this.currentLang()));
   }
 }

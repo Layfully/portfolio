@@ -8,12 +8,12 @@
     sm:rounded-full
   ">
     <li class="nav-highlight"></li>
-    @for (link of blok.links; track link._uid) {
+    @for (link of blok().links; track link._uid) {
       <li class="flex">
         <a [routerLink]="[]"
           [fragment]="link.section_id"
           class="header-link"
-          [class.active]="activeSection === link.section_id"
+          [class.active]="activeSection() === link.section_id"
           (click)="onLinkClick(link.section_id)">{{ link.label }}</a>
       </li>
     }

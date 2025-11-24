@@ -6,7 +6,8 @@ import {
   ViewChild,
   ElementRef,
   PLATFORM_ID,
-  Inject
+  Inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
@@ -18,7 +19,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   selector: 'app-about',
   imports: [RichTextPipe, SectionWrapper],
   templateUrl: './about.html',
-  styleUrl: './about.scss'
+  styleUrl: './about.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class About implements AfterViewInit, OnDestroy {
   @Input() blok: any;

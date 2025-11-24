@@ -1,6 +1,6 @@
 import {
   Component,
-  Input,
+  input,
   AfterViewInit,
   OnDestroy,
   ViewChild,
@@ -8,7 +8,8 @@ import {
   ElementRef,
   QueryList,
   PLATFORM_ID,
-  Inject
+  Inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
@@ -19,10 +20,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 @Component({
   selector: 'app-projects',
   imports: [SectionWrapper, RichTextPipe, NgOptimizedImage],
-  templateUrl: './projects.html'
+  templateUrl: './projects.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Projects implements AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  blok = input.required<any>();
 
   @ViewChild('projectsWrapper', { read: ElementRef }) wrapper!: ElementRef<HTMLElement>;
   @ViewChild('projectsTitle') title!: ElementRef<HTMLHeadingElement>;

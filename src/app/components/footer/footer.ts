@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, input, ViewChild, ElementRef, AfterViewInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { RichTextPipe } from '../../pipes/rich-text-pipe';
 import gsap from 'gsap';
 
@@ -6,13 +6,14 @@ import gsap from 'gsap';
   selector: 'app-footer',
   standalone: true,
   imports: [RichTextPipe],
-  templateUrl: './footer.html'
+  templateUrl: './footer.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Footer implements AfterViewInit {
-  @Input() blok: any;
+  blok = input.required<any>();
   @ViewChild('content') contentEl!: ElementRef<HTMLDivElement>;
 
-  expanded = false;
+  expanded = signal(false);
   contentHeight = 0;
 
   ngAfterViewInit() {
@@ -23,7 +24,7 @@ export class Footer implements AfterViewInit {
     const el = this.contentEl.nativeElement;
     const fullHeight = el.scrollHeight;
 
-    if (!this.expanded) {
+    if (!this.expanded()) {
       gsap.to(el, {
         height: fullHeight,
         duration: 0.4,
@@ -43,6 +44,6 @@ export class Footer implements AfterViewInit {
       });
     }
 
-    this.expanded = !this.expanded;
+    this.expanded.set(!this.expanded());
   }
 }

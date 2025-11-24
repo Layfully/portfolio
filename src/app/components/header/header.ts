@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Component, input, AfterViewInit, OnDestroy, ElementRef, Inject, PLATFORM_ID, ViewChild, signal, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { gsap } from 'gsap';
 import { RouterLink } from '@angular/router';
@@ -6,14 +6,15 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
-  imports: [RouterLink]
+  imports: [RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Header implements AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  blok = input.required<any>();
 
   @ViewChild('headerNav') headerNav!: ElementRef<HTMLElement>;
 
-  activeSection: string = 'Home';
+  activeSection = signal('Home');
 
   private intersectionObserver?: IntersectionObserver;
   private mutationObserver?: MutationObserver;
@@ -96,8 +97,8 @@ export class Header implements AfterViewInit, OnDestroy {
 
       const target = sorted[0].target as HTMLElement;
       window.requestAnimationFrame(() => {
-        if (this.activeSection !== target.id) {
-          this.activeSection = target.id;
+        if (this.activeSection() !== target.id) {
+          this.activeSection.set(target.id);
           this.updateHighlight();
         }
       });
@@ -117,7 +118,7 @@ export class Header implements AfterViewInit, OnDestroy {
   }
 
   private observeAllSections(): void {
-    this.blok.links.forEach((link: any) => {
+    this.blok().links.forEach((link: any) => {
       const element = document.getElementById(link.section_id);
       if (element) {
         this.intersectionObserver!.observe(element);
@@ -126,7 +127,7 @@ export class Header implements AfterViewInit, OnDestroy {
   }
 
   private updateHighlight(): void {
-    const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection}"]`);
+    const activeLink = this.elementRef.nativeElement.querySelector(`a[href="#${this.activeSection()}"]`);
     const highlight = this.elementRef.nativeElement.querySelector('.nav-highlight') as HTMLElement;
     const nav = this.elementRef.nativeElement.querySelector('ul');
 
@@ -144,7 +145,7 @@ export class Header implements AfterViewInit, OnDestroy {
 
   onLinkClick(sectionId: string): void {
     this.isNavigating = true;
-    this.activeSection = sectionId;
+    this.activeSection.set(sectionId);
     this.updateHighlight();
   }
 }

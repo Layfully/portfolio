@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideZonelessChangeDetection } from '@angular/core';
 import { SectionWrapper } from './section-wrapper';
 
 describe('SectionWrapper', () => {
@@ -8,7 +8,8 @@ describe('SectionWrapper', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SectionWrapper]
+      imports: [SectionWrapper],
+      providers: [provideZonelessChangeDetection()],
     })
     .compileComponents();
 

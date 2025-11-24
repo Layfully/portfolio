@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { StoryblokService } from '../../services/storyblok.service';
 import { SeoService } from '../../services/seo.service';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
@@ -28,7 +28,8 @@ import { LanguageSwitcher } from "../language-switcher/language-switcher";
     AsyncPipe,
     LanguageSwitcher
 ],
-  templateUrl: './home.html'
+  templateUrl: './home.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Home implements OnInit {
 

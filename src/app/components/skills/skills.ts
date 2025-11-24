@@ -1,6 +1,6 @@
 import {
   Component,
-  Input,
+  input,
   AfterViewInit,
   ViewChild,
   ViewChildren,
@@ -8,7 +8,8 @@ import {
   QueryList,
   OnDestroy,
   PLATFORM_ID,
-  Inject
+  Inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
@@ -21,9 +22,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
     SectionWrapper
   ],
   templateUrl: './skills.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Skills implements AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  blok = input.required<any>();
   @ViewChild('skillsWrapper', { read: ElementRef }) skillsWrapper!: ElementRef<HTMLElement>;
   @ViewChildren('skillTag') skillTags!: QueryList<ElementRef<HTMLLIElement>>;
 

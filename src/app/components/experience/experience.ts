@@ -1,6 +1,6 @@
 import {
   Component,
-  Input,
+  input,
   AfterViewInit,
   OnDestroy,
   ViewChild,
@@ -8,7 +8,8 @@ import {
   ElementRef,
   QueryList,
   PLATFORM_ID,
-  Inject
+  Inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SectionWrapper } from '../section-wrapper/section-wrapper';
@@ -19,9 +20,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
   selector: 'app-experience',
   imports: [SectionWrapper],
   templateUrl: './experience.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Experience implements AfterViewInit, OnDestroy {
-  @Input() blok: any;
+  blok = input.required<any>();
   @ViewChild('experienceWrapper', { read: ElementRef }) wrapper!: ElementRef<HTMLElement>;
   @ViewChild('experienceTitle') title!: ElementRef<HTMLHeadingElement>;
   @ViewChild('timelineBar') timelineBar!: ElementRef<HTMLDivElement>;
