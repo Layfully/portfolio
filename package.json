@@ -24,7 +24,7 @@
     "@angular/service-worker": "^21.0.3",
     "@angular/ssr": "^21.0.3",
     "@storyblok/js": "^4.4.3",
-    "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/postcss": "^4.1.18",
     "express": "^5.2.1",
     "gsap": "^3.14.1",
     "postcss": "^8.5.6",
