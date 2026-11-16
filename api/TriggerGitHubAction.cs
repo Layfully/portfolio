@@ -42,6 +42,17 @@ public class TriggerGitHubAction
 
         _logger.LogInformation("Secret key is valid.");
 
+        // The Storyblok space also holds the link-in-bio site's stories, and every publish calls both sites' webhooks.
+        // Only stories the build fetches (scripts/fetch-storyblok-data.mjs) need a new build here.
+        var slug = StorySlug(await req.ReadAsStringAsync());
+        if (slug is not null && !IsPortfolioStory(slug))
+        {
+            _logger.LogInformation("Story {Slug} isn't part of the portfolio build; nothing triggered.", slug);
+            var skipped = req.CreateResponse(HttpStatusCode.OK);
+            await skipped.WriteStringAsync($"Story {slug} isn't part of the portfolio build; nothing triggered.");
+            return skipped;
+        }
+
         _logger.LogInformation("Processing request to trigger GitHub Action build.");
 
         if (string.IsNullOrEmpty(_githubOptions.Pat) ||
@@ -81,6 +92,50 @@ public class TriggerGitHubAction
         {
             _logger.LogError(ex, "An unexpected error occurred during execution.");
             return await CreateErrorResponse(req, HttpStatusCode.InternalServerError, "An internal error occurred.");
+        }
+    }
+
+    // The languages the build fetches. With folder-level translation a story's slug starts with its language.
+    private static readonly string[] LanguagePrefixes = ["en/", "pl/"];
+
+    // The build fetches the stories that start with "portfolio" (starts_with in fetch-storyblok-data.mjs).
+    internal static bool IsPortfolioStory(string slug)
+    {
+        foreach (var prefix in LanguagePrefixes)
+        {
+            if (slug.StartsWith(prefix, StringComparison.Ordinal))
+            {
+                slug = slug[prefix.Length..];
+                break;
+            }
+        }
+
+        return slug.StartsWith("portfolio", StringComparison.Ordinal);
+    }
+
+    // The story's full slug from Storyblok's webhook body ({ "action": "published", "full_slug": "portfolio", ... }).
+    // Null when the body names no story: such a call still triggers a build, so a change in what Storyblok sends
+    // can't quietly stop the builds.
+    internal static string? StorySlug(string? body)
+    {
+        if (string.IsNullOrWhiteSpace(body))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(body);
+            return document.RootElement.ValueKind == JsonValueKind.Object
+                && document.RootElement.TryGetProperty("full_slug", out var slug)
+                && slug.ValueKind == JsonValueKind.String
+                && slug.GetString()?.Trim('/') is { Length: > 0 } name
+                    ? name
+                    : null;
+        }
+        catch (JsonException)
+        {
+            return null;
         }
     }
 
